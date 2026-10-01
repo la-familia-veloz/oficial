@@ -6,7 +6,7 @@
     <title>Hot Dogs La Familia - ¡El verdadero sabor de la calle!</title>
 
     <!-- Content Security Policy (CSP) permitting essential CDNs -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self';">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
@@ -108,13 +108,20 @@
             transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* Status Banner Pulse Animation */
-        @keyframes subtlePulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.85; transform: scale(0.995); }
+        /* Animación fluida sólo para el texto del banner sin afectar bordes */
+        @keyframes subtleTextPulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.03);
+            }
         }
-        .banner-pulse {
-            animation: subtlePulse 3s infinite ease-in-out;
+        .text-scale-pulse {
+            display: inline-block;
+            animation: subtleTextPulse 2.8s ease-in-out infinite;
+            transform-origin: center center;
+            will-change: transform;
         }
 
         /* Custom Webkit Scrollbar */
@@ -136,7 +143,7 @@
 <body class="min-h-screen flex flex-col justify-between relative selection:bg-orange-600 selection:text-white">
 
     <!-- Automatic Live Store Status Banner -->
-    <div id="statusBanner" class="w-full text-center py-2.5 px-4 font-bold text-xs sm:text-sm tracking-wide transition-all duration-500 banner-pulse border-b border-zinc-800">
+    <div id="statusBanner" class="w-full text-center py-2.5 px-4 font-bold text-xs sm:text-sm tracking-wide transition-all duration-500 border-b border-zinc-800">
         <!-- Content inserted dynamically by calculateStoreStatus() JS -->
     </div>
 
@@ -365,7 +372,7 @@
         </section>
     </main>
 
-    <!-- Footer Section (Texto siempre visible y estático, sin clases reveal ni animaciones) -->
+    <!-- Footer Section -->
     <footer class="bg-black border-t border-zinc-900 py-12 px-4 sm:px-6 text-center">
         <div class="max-w-4xl mx-auto">
             <p class="italic text-brandYellow text-base sm:text-lg font-medium max-w-2xl mx-auto mb-8 leading-relaxed opacity-100">
@@ -377,7 +384,7 @@
         </div>
     </footer>
 
-    <!-- Floating WhatsApp Button with rel="noopener noreferrer" -->
+    <!-- Floating WhatsApp Button -->
     <a href="https://wa.me/?text=%C2%A1Hola!%20Quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20Hot%20Dogs%20La%20Familia" target="_blank" rel="noopener noreferrer" class="fixed bottom-6 right-6 z-40 bg-[#25D366] text-white w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center text-3xl sm:text-4xl whatsapp-glow" aria-label="Contacto WhatsApp">
         <i class="fa-brands fa-whatsapp"></i>
     </a>
@@ -430,7 +437,7 @@
          */
         function calculateStoreStatus() {
             const now = new Date();
-            const day = now.getDay(); // 0 = Sunday, 1 = Monday, ..., 4 = Thursday, 5 = Friday, 6 = Saturday
+            const day = now.getDay(); 
             const currentMinutes = (now.getHours() * 60) + now.getMinutes();
 
             const openMinutes = 18 * 60;        // 18:00 (6:00 PM) = 1080 mins
@@ -442,17 +449,28 @@
             const banner = document.getElementById('statusBanner');
 
             if (isOpenDay && isOpenTime) {
-                banner.className = "w-full text-center py-2.5 px-4 font-bold text-xs sm:text-sm tracking-wide bg-emerald-950/90 text-emerald-300 border-b border-emerald-700/80 banner-pulse flex items-center justify-center gap-2";
+                banner.className = "w-full text-center py-2.5 px-4 font-bold text-xs sm:text-sm tracking-wide bg-emerald-950 text-emerald-300 border-b border-emerald-700/80 flex items-center justify-center gap-2 relative overflow-hidden";
                 
-                // Secure Node Construction for status banner
                 banner.textContent = '';
                 const dotSpan = document.createElement('span');
                 dotSpan.className = 'w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping';
+                
+                const textSpan = document.createElement('span');
+                textSpan.className = 'text-scale-pulse';
+                textSpan.textContent = ' 🟢 ¡Estamos Abiertos! Haz tu pedido ahora';
+
                 banner.appendChild(dotSpan);
-                banner.appendChild(document.createTextNode(' 🟢 ¡Estamos Abiertos! Haz tu pedido ahora'));
+                banner.appendChild(textSpan);
             } else {
-                banner.className = "sticky top-0 z-50 w-full text-center py-2.5 px-4 font-bold text-xs sm:text-sm tracking-wide bg-red-950/90 text-red-300 border-b border-red-800/80 banner-pulse flex items-center justify-center gap-2 shadow-lg";
-                banner.textContent = '🔴 Ahora estamos Cerrados. Nuestro horario es de Jueves a Domingo de 6:00 PM a 11:30 PM';
+                // Banner totalmente extendido de borde a borde para evitar espacios o sombras recortadas
+                banner.className = "sticky top-0 z-50 w-full text-center py-2.5 px-4 font-bold text-xs sm:text-sm tracking-wide bg-red-950 text-red-300 border-b border-red-800/80 flex items-center justify-center gap-2 shadow-lg relative overflow-hidden";
+                
+                banner.textContent = '';
+                const textSpan = document.createElement('span');
+                textSpan.className = 'text-scale-pulse';
+                textSpan.textContent = '🔴 Ahora estamos Cerrados. Nuestro horario es de Jueves a Domingo de 6:00 PM a 11:30 PM';
+                
+                banner.appendChild(textSpan);
             }
         }
 
@@ -524,7 +542,6 @@
 
             menuData[itemId].qty = Math.max(0, menuData[itemId].qty + change);
             
-            // Update Menu Card Counter UI via safe textContent
             const qtyElem = document.getElementById(`qty-${itemId}`);
             if (qtyElem) {
                 qtyElem.textContent = menuData[itemId].qty;
@@ -533,16 +550,12 @@
             updateCartSummary();
         }
 
-        /**
-         * SECURE CART SUMMARY RENDERING
-         * Uses DOM nodes and textContent to prevent Cross-Site Scripting (XSS)
-         */
         function updateCartSummary() {
             let totalItems = 0;
             let totalPrice = 0;
 
             const cartItemsList = document.getElementById('cartItemsList');
-            cartItemsList.textContent = ''; // Safely clear list
+            cartItemsList.textContent = ''; 
 
             Object.keys(menuData).forEach(key => {
                 const item = menuData[key];
@@ -551,16 +564,14 @@
                     totalItems += item.qty;
                     totalPrice += itemTotal;
 
-                    // Create Item Row container
                     const itemRow = document.createElement('div');
                     itemRow.className = 'flex justify-between items-center bg-zinc-900/90 p-3.5 rounded-xl border border-zinc-800';
 
-                    // Info Container
                     const infoDiv = document.createElement('div');
                     
                     const titleH4 = document.createElement('h4');
                     titleH4.className = 'font-bold text-white text-base';
-                    titleH4.textContent = item.name; // Secure Text Assignment
+                    titleH4.textContent = item.name;
 
                     const priceP = document.createElement('p');
                     priceP.className = 'text-xs text-brandYellow font-semibold';
@@ -569,7 +580,6 @@
                     infoDiv.appendChild(titleH4);
                     infoDiv.appendChild(priceP);
 
-                    // Qty & Subtotal Container
                     const qtyDiv = document.createElement('div');
                     qtyDiv.className = 'flex items-center gap-2';
 
@@ -591,7 +601,6 @@
                 }
             });
 
-            // Update Header Counter Badges Safely
             document.getElementById('cartCountBadge').textContent = totalItems;
             document.getElementById('cartCountBadgeMobile').textContent = totalItems;
             document.getElementById('cartTotalAmount').textContent = `$${totalPrice} MXN`;
@@ -627,9 +636,6 @@
             }
         }
 
-        /**
-         * SECURE WHATSAPP ORDER SANITIZATION & URL ENCODING
-         */
         function sendOrderWhatsApp() {
             let orderLines = [];
             let total = 0;
@@ -647,14 +653,10 @@
 
             const message = `¡Hola! Quisiera realizar el siguiente pedido en *Hot Dogs La Familia*:\n\n${orderLines.join('\n')}\n\n*Total:* $${total} MXN\n\n¿Me confirman el tiempo de entrega?`;
             
-            // Full URL encoding to protect against parameter injection
             const encodedMessage = encodeURIComponent(message);
             window.open(`https://wa.me/?text=${encodedMessage}`, '_blank', 'noopener,noreferrer');
         }
 
-        /**
-         * SECURE WHATSAPP EVENT INQUIRY SANITIZATION & URL ENCODING
-         */
         function openWhatsAppEvent() {
             const eventMessage = `¡Hola! Me gustaría cotizar *Hot Dogs La Familia* para un evento personal. ¿Podrían brindarme información de paquetes y disponibilidad?`;
             const encodedMessage = encodeURIComponent(eventMessage);
