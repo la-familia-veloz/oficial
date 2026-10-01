@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hot Dogs La Familia - ¡El verdadero sabor de la calle!</title>
+
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -16,6 +17,8 @@
                         brandOrange: '#ff4500',
                         brandOrangeHover: '#e03e00',
                         brandYellow: '#ffcc00',
+                        brandGreen: '#22c55e',
+                        brandRed: '#ef4444'
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
@@ -24,12 +27,12 @@
             }
         }
     </script>
-    <!-- Google Fonts Inter -->
+
+    <!-- Google Fonts Inter & FontAwesome Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Custom Animation & Interaction Styles -->
+    <!-- Custom CSS Animations & Styling -->
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -38,65 +41,74 @@
             overflow-x: hidden;
         }
 
-        /* Glowing Orange Effect */
+        /* Glowing Orange Button Effect */
         .btn-orange-glow {
             background-color: #ff4500;
-            box-shadow: 0 0 20px rgba(255, 69, 0, 0.5);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 22px rgba(255, 69, 0, 0.55);
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .btn-orange-glow:hover {
             background-color: #ff5514;
-            box-shadow: 0 0 30px rgba(255, 69, 0, 0.8);
+            box-shadow: 0 0 32px rgba(255, 69, 0, 0.85);
             transform: translateY(-2px);
         }
 
-        /* Gold Card Highlight Glow */
+        /* Gold Card Highlight Glow for Specialty Item */
         .card-special-glow {
             border: 2px solid #ffcc00;
-            box-shadow: 0 0 15px rgba(255, 204, 0, 0.25);
-            transition: all 0.3s ease;
+            box-shadow: 0 0 18px rgba(255, 204, 0, 0.3);
+            transition: all 0.35s ease;
         }
         .card-special-glow:hover {
-            box-shadow: 0 0 25px rgba(255, 204, 0, 0.45);
+            box-shadow: 0 0 30px rgba(255, 204, 0, 0.5);
             transform: translateY(-4px);
         }
 
-        /* Standard Card Hover */
+        /* Standard Card Hover Transition */
         .menu-card {
-            transition: all 0.3s ease;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .menu-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 12px 28px -5px rgba(0, 0, 0, 0.6);
         }
 
-        /* Green WhatsApp Glow */
+        /* Green WhatsApp Glow Effect */
         .whatsapp-glow {
             box-shadow: 0 0 20px rgba(37, 211, 102, 0.6);
-            transition: all 0.3s ease;
+            transition: all 0.35s ease;
         }
         .whatsapp-glow:hover {
-            box-shadow: 0 0 30px rgba(37, 211, 102, 0.9);
+            box-shadow: 0 0 32px rgba(37, 211, 102, 0.9);
             transform: scale(1.08);
         }
 
         /* Intersection Observer Reveal Animation */
         .reveal {
             opacity: 0;
-            transform: translateY(35px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            transform: translateY(30px);
+            transition: opacity 0.75s ease-out, transform 0.75s ease-out;
         }
         .reveal.active {
             opacity: 1;
             transform: translateY(0);
         }
 
-        /* Cart Drawer Slide */
-        .cart-drawer {
-            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        /* Slow & Elegant Cart Drawer Slide Transition */
+        .cart-drawer-slide {
+            transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* Custom Scrollbar */
+        /* Status Banner Pulse Animation */
+        @keyframes subtlePulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.85; transform: scale(0.995); }
+        }
+        .banner-pulse {
+            animation: subtlePulse 3s infinite ease-in-out;
+        }
+
+        /* Custom Webkit Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -114,26 +126,31 @@
 </head>
 <body class="min-h-screen flex flex-col justify-between relative selection:bg-orange-600 selection:text-white">
 
-    <!-- Sticky Header Navbar -->
+    <!-- Automatic Live Store Status Banner (Calculated automatically via JavaScript) -->
+    <div id="statusBanner" class="w-full text-center py-2.5 px-4 font-bold text-xs sm:text-sm tracking-wide transition-all duration-500 banner-pulse border-b border-zinc-800">
+        <!-- Content inserted dynamically by checkStoreStatus() JS -->
+    </div>
+
+    <!-- Sticky Header Navigation -->
     <header class="sticky top-0 z-40 bg-[#0d0d0d]/90 backdrop-blur-md border-b border-zinc-800/80 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             
-            <!-- Brand Logo -->
-            <a href="#" class="flex items-center gap-2 group">
-                <span class="text-3xl transition-transform duration-300 group-hover:scale-125 group-hover:rotate-12">🌭</span>
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-2.5 group">
+                <span class="text-3xl sm:text-4xl transition-transform duration-300 group-hover:scale-125 group-hover:rotate-12">🌭</span>
                 <div class="text-xl sm:text-2xl font-black tracking-tight flex items-center gap-1.5">
                     <span class="text-brandYellow">Hot Dogs</span>
                     <span class="text-white">La Familia</span>
                 </div>
             </a>
 
-            <!-- Desktop Navigation Links -->
+            <!-- Desktop Links -->
             <nav class="hidden md:flex items-center space-x-8">
                 <a href="#menu" class="nav-link font-bold text-gray-200 hover:text-brandYellow transition-colors duration-200 py-2">Menú</a>
                 <a href="#eventos" class="nav-link font-bold text-gray-200 hover:text-brandYellow transition-colors duration-200 py-2">Eventos</a>
                 <a href="#ubicacion" class="nav-link font-bold text-gray-200 hover:text-brandYellow transition-colors duration-200 py-2">Ubicación</a>
                 
-                <!-- Dynamic Cart Header Button -->
+                <!-- Cart Header Trigger Button -->
                 <button id="cartNavBtn" onclick="toggleCartDrawer(true)" class="hidden btn-orange-glow px-4 py-2 rounded-full font-bold text-white flex items-center gap-2 text-sm">
                     <i class="fa-solid fa-cart-shopping"></i>
                     <span>Ver Carrito</span>
@@ -141,19 +158,19 @@
                 </button>
             </nav>
 
-            <!-- Mobile Menu Toggle Button -->
+            <!-- Mobile Action Buttons -->
             <div class="flex items-center gap-3 md:hidden">
                 <button id="cartNavBtnMobile" onclick="toggleCartDrawer(true)" class="hidden btn-orange-glow px-3 py-1.5 rounded-full font-bold text-white flex items-center gap-1.5 text-xs">
                     <i class="fa-solid fa-cart-shopping"></i>
                     <span id="cartCountBadgeMobile" class="bg-white text-brandOrange font-extrabold text-xs px-1.5 py-0.2 rounded-full">0</span>
                 </button>
-                <button id="mobileMenuBtn" class="text-white text-2xl p-2 focus:outline-none focus:text-brandYellow">
+                <button id="mobileMenuBtn" class="text-white text-2xl p-2 focus:outline-none focus:text-brandYellow" aria-label="Abrir Menú Mobile">
                     <i class="fa-solid fa-bars"></i>
                 </button>
             </div>
         </div>
 
-        <!-- Mobile Navigation Slide Drawer -->
+        <!-- Mobile Drawer Links -->
         <div id="mobileMenu" class="hidden md:hidden bg-[#141414] border-b border-zinc-800 px-6 py-4 space-y-4">
             <a href="#menu" onclick="closeMobileMenu()" class="block font-bold text-lg text-gray-200 hover:text-brandYellow py-1">Menú</a>
             <a href="#eventos" onclick="closeMobileMenu()" class="block font-bold text-lg text-gray-200 hover:text-brandYellow py-1">Eventos</a>
@@ -163,22 +180,23 @@
 
     <main>
         <!-- Hero Section -->
-        <section class="relative py-20 lg:py-28 px-4 sm:px-6 lg:px-8 text-center max-w-5xl mx-auto flex flex-col items-center justify-center min-h-[80vh]">
-            <!-- Badge Pill -->
-            <div class="reveal inline-flex items-center gap-2 px-5 py-2 rounded-full border border-yellow-500/80 bg-zinc-900/60 mb-8 shadow-lg">
+        <section class="relative py-20 lg:py-28 px-4 sm:px-6 lg:px-8 text-center max-w-5xl mx-auto flex flex-col items-center justify-center min-h-[75vh]">
+            
+            <!-- Gold Badge Pill -->
+            <div class="reveal inline-flex items-center gap-2 px-5 py-2 rounded-full border border-yellow-500/80 bg-zinc-900/70 mb-8 shadow-lg">
                 <span class="text-sm sm:text-base">🔥</span>
                 <span class="text-xs sm:text-sm font-bold tracking-wider uppercase text-yellow-400">LOS MÁS SABROSOS DE LA ZONA</span>
             </div>
 
-            <!-- Main Headline -->
+            <!-- Headline -->
             <h1 class="reveal text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-tight text-white mb-8">
                 ¡EL VERDADERO SABOR<br>
                 <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-orange-600 to-amber-500">DE LA CALLE!</span>
             </h1>
 
-            <!-- CTA Buttons -->
+            <!-- Hero Action Buttons -->
             <div class="reveal flex flex-col sm:flex-row items-center justify-center gap-4 w-full max-w-md">
-                <a href="#menu" class="w-full sm:w-auto btn-orange-glow px-8 py-3.5 rounded-full font-extrabold text-white text-center text-lg tracking-wide transition-all duration-300">
+                <a href="#menu" class="w-full sm:w-auto btn-orange-glow px-9 py-3.5 rounded-full font-extrabold text-white text-center text-lg tracking-wide transition-all duration-300">
                     Ver Menú
                 </a>
                 <a href="#eventos" class="w-full sm:w-auto bg-zinc-900/90 border border-zinc-700 hover:border-zinc-500 text-white font-bold px-8 py-3.5 rounded-full text-center text-lg transition-all duration-300 hover:bg-zinc-800">
@@ -188,20 +206,19 @@
         </section>
 
         <!-- Menu Section ("Arma tu Pedido") -->
-        <section id="menu" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20">
+        <section id="menu" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-24">
             <div class="text-center mb-14 reveal">
                 <h2 class="text-3xl sm:text-5xl font-black text-white tracking-tight">
                     Arma tu <span class="text-brandYellow">Pedido</span>
                 </h2>
             </div>
 
-            <!-- Menu Grid -->
+            <!-- Menu Cards Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 
-                <!-- Card 1: El Clásico -->
+                <!-- Item 1: El Clásico -->
                 <div class="reveal menu-card relative bg-brandCard rounded-3xl p-6 border border-zinc-800/80 flex flex-col justify-between">
                     <div>
-                        <!-- Tag -->
                         <div class="absolute -top-3.5 left-6 bg-brandOrange text-white text-xs font-black uppercase px-3 py-1 rounded-md tracking-wider shadow-md">
                             MÁS VENDIDO
                         </div>
@@ -213,17 +230,16 @@
                     <div class="flex items-center justify-between pt-4 border-t border-zinc-800/60">
                         <span class="text-xl sm:text-2xl font-black text-brandYellow">$35 MXN</span>
                         <div class="flex items-center bg-zinc-800 rounded-lg p-1 border border-zinc-700">
-                            <button onclick="updateQty('clasico', -1)" class="w-8 h-8 rounded-md bg-zinc-700 hover:bg-zinc-600 text-white font-bold transition flex items-center justify-center text-sm">-</button>
+                            <button onclick="updateQty('clasico', -1)" class="w-8 h-8 rounded-md bg-zinc-700 hover:bg-zinc-600 text-white font-bold transition flex items-center justify-center text-sm" aria-label="Restar 1">-</button>
                             <span id="qty-clasico" class="w-10 text-center font-bold text-white text-base">0</span>
-                            <button onclick="updateQty('clasico', 1)" class="w-8 h-8 rounded-md bg-zinc-700 hover:bg-zinc-600 text-white font-bold transition flex items-center justify-center text-sm">+</button>
+                            <button onclick="updateQty('clasico', 1)" class="w-8 h-8 rounded-md bg-zinc-700 hover:bg-zinc-600 text-white font-bold transition flex items-center justify-center text-sm" aria-label="Sumar 1">+</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Card 2: Hot Dog Monstruo (Special Card) -->
+                <!-- Item 2: Hot Dog Monstruo (Gold Highlight) -->
                 <div class="reveal card-special-glow relative bg-brandCard rounded-3xl p-6 flex flex-col justify-between">
                     <div>
-                        <!-- Tag -->
                         <div class="absolute -top-3.5 left-6 bg-brandYellow text-black text-xs font-black uppercase px-3 py-1 rounded-md tracking-wider shadow-md">
                             ESPECIALIDAD
                         </div>
@@ -235,14 +251,14 @@
                     <div class="flex items-center justify-between pt-4 border-t border-zinc-800/60">
                         <span class="text-xl sm:text-2xl font-black text-brandYellow">$65 MXN</span>
                         <div class="flex items-center bg-zinc-800 rounded-lg p-1 border border-zinc-700">
-                            <button onclick="updateQty('monstruo', -1)" class="w-8 h-8 rounded-md bg-zinc-700 hover:bg-zinc-600 text-white font-bold transition flex items-center justify-center text-sm">-</button>
+                            <button onclick="updateQty('monstruo', -1)" class="w-8 h-8 rounded-md bg-zinc-700 hover:bg-zinc-600 text-white font-bold transition flex items-center justify-center text-sm" aria-label="Restar 1">-</button>
                             <span id="qty-monstruo" class="w-10 text-center font-bold text-white text-base">0</span>
-                            <button onclick="updateQty('monstruo', 1)" class="w-8 h-8 rounded-md bg-zinc-700 hover:bg-zinc-600 text-white font-bold transition flex items-center justify-center text-sm">+</button>
+                            <button onclick="updateQty('monstruo', 1)" class="w-8 h-8 rounded-md bg-zinc-700 hover:bg-zinc-600 text-white font-bold transition flex items-center justify-center text-sm" aria-label="Sumar 1">+</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Card 3: El Habanero -->
+                <!-- Item 3: El Habanero -->
                 <div class="reveal menu-card relative bg-brandCard rounded-3xl p-6 border border-zinc-800/80 flex flex-col justify-between">
                     <div>
                         <h3 class="text-2xl font-bold text-white mb-3">El Habanero</h3>
@@ -253,14 +269,14 @@
                     <div class="flex items-center justify-between pt-4 border-t border-zinc-800/60">
                         <span class="text-xl sm:text-2xl font-black text-brandYellow">$45 MXN</span>
                         <div class="flex items-center bg-zinc-800 rounded-lg p-1 border border-zinc-700">
-                            <button onclick="updateQty('habanero', -1)" class="w-8 h-8 rounded-md bg-zinc-700 hover:bg-zinc-600 text-white font-bold transition flex items-center justify-center text-sm">-</button>
+                            <button onclick="updateQty('habanero', -1)" class="w-8 h-8 rounded-md bg-zinc-700 hover:bg-zinc-600 text-white font-bold transition flex items-center justify-center text-sm" aria-label="Restar 1">-</button>
                             <span id="qty-habanero" class="w-10 text-center font-bold text-white text-base">0</span>
-                            <button onclick="updateQty('habanero', 1)" class="w-8 h-8 rounded-md bg-zinc-700 hover:bg-zinc-600 text-white font-bold transition flex items-center justify-center text-sm">+</button>
+                            <button onclick="updateQty('habanero', 1)" class="w-8 h-8 rounded-md bg-zinc-700 hover:bg-zinc-600 text-white font-bold transition flex items-center justify-center text-sm" aria-label="Sumar 1">+</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Card 4: Refresco Bien Frío -->
+                <!-- Item 4: Refresco Bien Frío -->
                 <div class="reveal menu-card relative bg-brandCard rounded-3xl p-6 border border-zinc-800/80 flex flex-col justify-between">
                     <div>
                         <h3 class="text-2xl font-bold text-white mb-3">Refresco Bien Frío</h3>
@@ -271,9 +287,9 @@
                     <div class="flex items-center justify-between pt-4 border-t border-zinc-800/60">
                         <span class="text-xl sm:text-2xl font-black text-brandYellow">$25 MXN</span>
                         <div class="flex items-center bg-zinc-800 rounded-lg p-1 border border-zinc-700">
-                            <button onclick="updateQty('refresco', -1)" class="w-8 h-8 rounded-md bg-zinc-700 hover:bg-zinc-600 text-white font-bold transition flex items-center justify-center text-sm">-</button>
+                            <button onclick="updateQty('refresco', -1)" class="w-8 h-8 rounded-md bg-zinc-700 hover:bg-zinc-600 text-white font-bold transition flex items-center justify-center text-sm" aria-label="Restar 1">-</button>
                             <span id="qty-refresco" class="w-10 text-center font-bold text-white text-base">0</span>
-                            <button onclick="updateQty('refresco', 1)" class="w-8 h-8 rounded-md bg-zinc-700 hover:bg-zinc-600 text-white font-bold transition flex items-center justify-center text-sm">+</button>
+                            <button onclick="updateQty('refresco', 1)" class="w-8 h-8 rounded-md bg-zinc-700 hover:bg-zinc-600 text-white font-bold transition flex items-center justify-center text-sm" aria-label="Sumar 1">+</button>
                         </div>
                     </div>
                 </div>
@@ -282,7 +298,7 @@
         </section>
 
         <!-- Events Section -->
-        <section id="eventos" class="py-20 bg-zinc-900/40 border-y border-zinc-800/60 scroll-mt-20">
+        <section id="eventos" class="py-20 bg-zinc-900/40 border-y border-zinc-800/60 scroll-mt-24">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
                 <div class="reveal">
                     <h2 class="text-3xl sm:text-5xl font-black text-white mb-6 flex items-center justify-center gap-3">
@@ -293,7 +309,7 @@
                     </p>
                 </div>
 
-                <!-- Feature Items List -->
+                <!-- Event Bullet Points -->
                 <div class="reveal space-y-4 max-w-md mx-auto text-left mb-10">
                     <div class="flex items-center gap-3 text-zinc-200 text-base sm:text-lg font-semibold">
                         <span class="text-xl">✨</span>
@@ -309,7 +325,7 @@
                     </div>
                 </div>
 
-                <!-- Reserve CTA Button -->
+                <!-- Reserve Button -->
                 <div class="reveal">
                     <button onclick="openWhatsAppEvent()" class="btn-orange-glow px-9 py-4 rounded-full font-black text-white text-lg transition duration-300 inline-block">
                         Reservar Fecha
@@ -319,7 +335,7 @@
         </section>
 
         <!-- Location Section -->
-        <section id="ubicacion" class="py-20 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto text-center scroll-mt-20">
+        <section id="ubicacion" class="py-20 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto text-center scroll-mt-24">
             <div class="reveal mb-8">
                 <h2 class="text-3xl sm:text-5xl font-black text-white mb-4 flex items-center justify-center gap-2">
                     <span class="text-red-500">📍</span> ¿Dónde nos encontramos?
@@ -329,7 +345,7 @@
                 </p>
             </div>
 
-            <!-- Hours Box -->
+            <!-- Operating Hours Highlight Box -->
             <div class="reveal max-w-xl mx-auto bg-brandCard/90 border-2 border-dashed border-yellow-500/80 rounded-2xl p-6 sm:p-8">
                 <h3 class="text-lg sm:text-xl font-bold text-white mb-2">
                     Horarios de atención:
@@ -344,11 +360,9 @@
     <!-- Footer Section -->
     <footer class="bg-black border-t border-zinc-900 py-12 px-4 sm:px-6 text-center">
         <div class="max-w-4xl mx-auto">
-            <!-- Quote -->
             <p class="reveal italic text-brandYellow text-base sm:text-lg font-medium max-w-2xl mx-auto mb-8 leading-relaxed">
                 "Empezamos en la banqueta, pero los sueños no tienen límites. Gracias por ser parte de cada bocado y apoyar este proyecto hecho con el corazón."
             </p>
-            <!-- Copyright -->
             <p class="text-zinc-500 text-xs sm:text-sm font-medium">
                 © 2026 Hot Dogs La Familia. Todos los derechos reservados.
             </p>
@@ -360,27 +374,27 @@
         <i class="fa-brands fa-whatsapp"></i>
     </a>
 
-    <!-- Cart Slide Drawer / Modal -->
-    <div id="cartOverlay" onclick="toggleCartDrawer(false)" class="fixed inset-0 bg-black/70 z-50 opacity-0 pointer-events-none transition-opacity duration-300"></div>
-    <div id="cartDrawer" class="fixed top-0 right-0 h-full w-full max-w-md bg-brandCard z-50 cart-drawer transform translate-x-full border-l border-zinc-800 p-6 flex flex-col justify-between shadow-2xl">
+    <!-- Slow Slide-In Cart Drawer / Backdrop Overlay -->
+    <div id="cartOverlay" onclick="toggleCartDrawer(false)" class="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 opacity-0 pointer-events-none transition-opacity duration-500 ease-in-out"></div>
+    <div id="cartDrawer" class="fixed top-0 right-0 h-full w-full max-w-md bg-brandCard z-50 cart-drawer-slide transform translate-x-full border-l border-zinc-800 p-6 flex flex-col justify-between shadow-2xl">
         <div>
             <!-- Cart Drawer Header -->
             <div class="flex items-center justify-between border-b border-zinc-800 pb-4 mb-6">
                 <h3 class="text-2xl font-black text-white flex items-center gap-2">
                     <i class="fa-solid fa-cart-shopping text-brandYellow"></i> Tu Pedido
                 </h3>
-                <button onclick="toggleCartDrawer(false)" class="text-zinc-400 hover:text-white text-2xl">
+                <button onclick="toggleCartDrawer(false)" class="text-zinc-400 hover:text-white text-2xl transition-colors" aria-label="Cerrar Carrito">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
 
-            <!-- Cart Items Container -->
+            <!-- Dynamic Cart Items Container -->
             <div id="cartItemsList" class="space-y-4 max-h-[60vh] overflow-y-auto pr-1">
-                <!-- Dynamic Items Inserted via JS -->
+                <!-- Cart items appended via JavaScript -->
             </div>
         </div>
 
-        <!-- Cart Drawer Footer -->
+        <!-- Cart Drawer Summary Footer -->
         <div class="border-t border-zinc-800 pt-6 mt-6">
             <div class="flex justify-between items-center mb-6 text-xl font-black text-white">
                 <span>Total:</span>
@@ -392,8 +406,9 @@
         </div>
     </div>
 
+    <!-- Application Interactive Logic -->
     <script>
-        // Menu Items Definition
+        // Menu Items State Data
         const menuData = {
             clasico: { name: 'El Clásico', price: 35, qty: 0 },
             monstruo: { name: 'Hot Dog Monstruo', price: 65, qty: 0 },
@@ -401,24 +416,68 @@
             refresco: { name: 'Refresco Bien Frío', price: 25, qty: 0 }
         };
 
-        // Scroll Reveal Animation (Intersection Observer)
-        document.addEventListener('DOMContentLoaded', () => {
-            const observerOptions = {
-                threshold: 0.15
-            };
+        /**
+         * Automatic Store Open/Closed Calculation based on Real Device Clock
+         * Opening Hours: Thursday - Sunday (4, 5, 6, 0 in JS Date), 18:00 to 23:30 hrs
+         */
+        function calculateStoreStatus() {
+            const now = new Date();
+            const day = now.getDay(); // 0 = Sunday, 1 = Monday, ..., 4 = Thursday, 5 = Friday, 6 = Saturday
+            const currentMinutes = (now.getHours() * 60) + now.getMinutes();
 
+            const openMinutes = 18 * 60;        // 18:00 (6:00 PM) = 1080 mins
+            const closeMinutes = (23 * 60) + 30; // 23:30 (11:30 PM) = 1410 mins
+
+            const isOpenDay = (day === 4 || day === 5 || day === 6 || day === 0);
+            const isOpenTime = (currentMinutes >= openMinutes && currentMinutes <= closeMinutes);
+
+            const banner = document.getElementById('statusBanner');
+
+            if (isOpenDay && isOpenTime) {
+                banner.className = "w-full text-center py-2.5 px-4 font-bold text-xs sm:text-sm tracking-wide bg-emerald-950/90 text-emerald-300 border-b border-emerald-700/80 banner-pulse flex items-center justify-center gap-2";
+                banner.innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span> 🟢 ¡Estamos Abiertos! Haz tu pedido ahora`;
+            } else {
+                banner.className = "w-full text-center py-2.5 px-4 font-bold text-xs sm:text-sm tracking-wide bg-red-950/90 text-red-300 border-b border-red-800/80 banner-pulse flex items-center justify-center gap-2";
+                banner.innerHTML = `🔴 Ahora estamos Cerrados. Nuestro horario es de Jueves a Domingo de 6:00 PM a 11:30 PM`;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check status on load and update every minute
+            calculateStoreStatus();
+            setInterval(calculateStoreStatus, 60000);
+
+            // Intersection Observer Reveal Effect
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('active');
                     }
                 });
-            }, observerOptions);
+            }, { threshold: 0.15 });
 
             document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+            // Smooth Scroll for all internal hash anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        e.preventDefault();
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                        closeMobileMenu();
+                    }
+                });
+            });
         });
 
-        // Toggle Mobile Menu Navigation
+        // Mobile Menu Drawer Controls
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const mobileMenu = document.getElementById('mobileMenu');
 
@@ -427,22 +486,24 @@
         });
 
         function closeMobileMenu() {
-            mobileMenu.classList.add('hidden');
+            if (mobileMenu) {
+                mobileMenu.classList.add('hidden');
+            }
         }
 
-        // Quantity Selector logic
+        // Quantity Adjuster Function
         function updateQty(itemId, change) {
             if (!menuData[itemId]) return;
 
             menuData[itemId].qty = Math.max(0, menuData[itemId].qty + change);
             
-            // Update UI count in menu card
+            // Update Menu Card Counter UI
             document.getElementById(`qty-${itemId}`).innerText = menuData[itemId].qty;
             
             updateCartSummary();
         }
 
-        // Update Nav Cart Badges and Drawer List
+        // Update Cart Badges and Items List
         function updateCartSummary() {
             let totalItems = 0;
             let totalPrice = 0;
@@ -456,9 +517,9 @@
                     totalItems += item.qty;
                     totalPrice += item.qty * item.price;
 
-                    // Render Cart Drawer Item
+                    // Append Item Element to Cart Drawer
                     const itemRow = document.createElement('div');
-                    itemRow.className = 'flex justify-between items-center bg-zinc-900/80 p-3.5 rounded-xl border border-zinc-800';
+                    itemRow.className = 'flex justify-between items-center bg-zinc-900/90 p-3.5 rounded-xl border border-zinc-800';
                     itemRow.innerHTML = `
                         <div>
                             <h4 class="font-bold text-white text-base">${item.name}</h4>
@@ -466,23 +527,20 @@
                         </div>
                         <div class="flex items-center gap-2">
                             <span class="text-sm font-bold text-zinc-300">x${item.qty}</span>
-                            <span class="text-sm font-black text-white ml-2">$${item.qty * item.price}</span>
+                            <span class="text-sm font-black text-white ml-2">$${item.qty * item.price} MXN</span>
                         </div>
                     `;
                     cartItemsList.appendChild(itemRow);
                 }
             });
 
-            // Update Badge Displays
+            // Update Header Counter Badges
+            document.getElementById('cartCountBadge').innerText = totalItems;
+            document.getElementById('cartCountBadgeMobile').innerText = totalItems;
+            document.getElementById('cartTotalAmount').innerText = `$${totalPrice} MXN`;
+
             const cartNavBtn = document.getElementById('cartNavBtn');
             const cartNavBtnMobile = document.getElementById('cartNavBtnMobile');
-            const cartCountBadge = document.getElementById('cartCountBadge');
-            const cartCountBadgeMobile = document.getElementById('cartCountBadgeMobile');
-            const cartTotalAmount = document.getElementById('cartTotalAmount');
-
-            cartCountBadge.innerText = totalItems;
-            cartCountBadgeMobile.innerText = totalItems;
-            cartTotalAmount.innerText = `$${totalPrice} MXN`;
 
             if (totalItems > 0) {
                 cartNavBtn.classList.remove('hidden');
@@ -494,7 +552,7 @@
             }
         }
 
-        // Open/Close Cart Drawer
+        // Toggle Cart Drawer
         function toggleCartDrawer(open) {
             const drawer = document.getElementById('cartDrawer');
             const overlay = document.getElementById('cartOverlay');
@@ -508,7 +566,7 @@
             }
         }
 
-        // WhatsApp Order Dispatch
+        // Send Cart Order via WhatsApp
         function sendOrderWhatsApp() {
             let orderText = "¡Hola! Quisiera realizar el siguiente pedido:%0A%0A";
             let hasItems = false;
@@ -532,7 +590,7 @@
             window.open(`https://wa.me/?text=${orderText}`, '_blank');
         }
 
-        // Event Quote WhatsApp Link
+        // Send Event Quote via WhatsApp
         function openWhatsAppEvent() {
             const msg = encodeURIComponent("¡Hola! Me gustaría cotizar un evento con Hot Dogs La Familia 🎉");
             window.open(`https://wa.me/?text=${msg}`, '_blank');
