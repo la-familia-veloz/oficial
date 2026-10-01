@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" class="scroll-smooth">
+<html lang="es" class="scroll-smooth dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,6 +17,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
@@ -25,6 +26,7 @@
                         brandOrange: '#ff4500',
                         brandOrangeHover: '#e03e00',
                         brandYellow: '#ffcc00',
+                        brandYellowDark: '#d97706',
                         brandGreen: '#22c55e',
                         brandRed: '#ef4444'
                     },
@@ -42,11 +44,76 @@
     
     <!-- Custom CSS Animations & Styling -->
     <style>
+        /* Modo Oscuro Default */
         body {
             font-family: 'Inter', sans-serif;
             background-color: #0d0d0d;
             color: #ffffff;
             overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Soporte Modo Claro - Gris suave mate (Slate-100) */
+        html:not(.dark) body {
+            background-color: #f1f5f9;
+            color: #020617;
+        }
+
+        /* Ajustes de Contraste y Colores para Modo Claro */
+        html:not(.dark) header {
+            background-color: rgba(255, 255, 255, 0.95) !important;
+            border-color: #cbd5e1 !important;
+        }
+        html:not(.dark) .nav-link {
+            color: #1e293b !important;
+        }
+        html:not(.dark) .nav-link:hover {
+            color: #d97706 !important;
+        }
+        html:not(.dark) .menu-card, 
+        html:not(.dark) .card-special-glow,
+        html:not(.dark) .hours-box,
+        html:not(.dark) #cartDrawer {
+            background-color: #ffffff !important;
+            border-color: #cbd5e1 !important;
+            box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08);
+        }
+        html:not(.dark) .menu-card h3,
+        html:not(.dark) .card-special-glow h3,
+        html:not(.dark) .hours-box h3,
+        html:not(.dark) h1, html:not(.dark) h2,
+        html:not(.dark) .text-white {
+            color: #020617 !important;
+        }
+        html:not(.dark) .text-zinc-400,
+        html:not(.dark) .text-zinc-300,
+        html:not(.dark) .text-zinc-200,
+        html:not(.dark) .hours-box p,
+        html:not(.dark) .event-bullet-text {
+            color: #020617 !important;
+            font-weight: 700;
+        }
+        html:not(.dark) .text-brandYellow {
+            color: #d97706 !important;
+        }
+        html:not(.dark) .bg-zinc-800 {
+            background-color: #e2e8f0 !important;
+            border-color: #94a3b8 !important;
+        }
+        html:not(.dark) .bg-zinc-800 button {
+            background-color: #cbd5e1 !important;
+            color: #020617 !important;
+        }
+        html:not(.dark) .bg-zinc-800 button:hover {
+            background-color: #94a3b8 !important;
+        }
+        html:not(.dark) section#eventos {
+            background-color: #e2e8f0 !important;
+            border-color: #cbd5e1 !important;
+        }
+        html:not(.dark) footer {
+            background-color: #e2e8f0 !important;
+            border-color: #cbd5e1 !important;
         }
 
         /* Glowing Orange Button Effect */
@@ -78,7 +145,6 @@
         }
         .menu-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 12px 28px -5px rgba(0, 0, 0, 0.6);
         }
 
         /* Green WhatsApp Glow Effect */
@@ -108,7 +174,7 @@
             transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* Animación fluida sólo para el texto del banner sin afectar bordes */
+        /* Animación fluida para el texto del banner */
         @keyframes subtleTextPulse {
             0%, 100% {
                 transform: scale(1);
@@ -161,11 +227,16 @@
             </a>
 
             <!-- Desktop Links -->
-            <nav class="hidden md:flex items-center space-x-8">
+            <nav class="hidden md:flex items-center space-x-6">
                 <a href="#menu" class="nav-link font-bold text-gray-200 hover:text-brandYellow transition-colors duration-200 py-2">Menú</a>
                 <a href="#eventos" class="nav-link font-bold text-gray-200 hover:text-brandYellow transition-colors duration-200 py-2">Eventos</a>
                 <a href="#ubicacion" class="nav-link font-bold text-gray-200 hover:text-brandYellow transition-colors duration-200 py-2">Ubicación</a>
                 
+                <!-- Theme Toggle Button Desktop -->
+                <button id="themeToggleBtn" onclick="toggleTheme()" class="p-2.5 rounded-full bg-zinc-800 hover:bg-zinc-700 text-yellow-400 transition duration-300" aria-label="Cambiar Tema">
+                    <i id="themeIcon" class="fa-solid fa-sun text-lg"></i>
+                </button>
+
                 <!-- Cart Header Trigger Button -->
                 <button id="cartNavBtn" onclick="toggleCartDrawer(true)" class="hidden btn-orange-glow px-4 py-2 rounded-full font-bold text-white flex items-center gap-2 text-sm">
                     <i class="fa-solid fa-cart-shopping"></i>
@@ -175,7 +246,12 @@
             </nav>
 
             <!-- Mobile Action Buttons -->
-            <div class="flex items-center gap-3 md:hidden">
+            <div class="flex items-center gap-2 md:hidden">
+                <!-- Theme Toggle Button Mobile -->
+                <button onclick="toggleTheme()" class="p-2 rounded-full bg-zinc-800 hover:bg-zinc-700 text-yellow-400 transition duration-300" aria-label="Cambiar Tema">
+                    <i id="themeIconMobile" class="fa-solid fa-sun text-base"></i>
+                </button>
+
                 <button id="cartNavBtnMobile" onclick="toggleCartDrawer(true)" class="hidden btn-orange-glow px-3 py-1.5 rounded-full font-bold text-white flex items-center gap-1.5 text-xs">
                     <i class="fa-solid fa-cart-shopping"></i>
                     <span id="cartCountBadgeMobile" class="bg-white text-brandOrange font-extrabold text-xs px-1.5 py-0.2 rounded-full">0</span>
@@ -214,7 +290,7 @@
                 <a href="#menu" class="w-full sm:w-auto btn-orange-glow px-9 py-3.5 rounded-full font-extrabold text-white text-center text-lg tracking-wide transition-all duration-300">
                     Ver Menú
                 </a>
-                <a href="#eventos" class="w-full sm:w-auto bg-zinc-900/90 border border-zinc-700 hover:border-zinc-500 text-white font-bold px-8 py-3.5 rounded-full text-center text-lg transition-all duration-300 hover:bg-zinc-800">
+                <a href="#eventos" class="w-full sm:w-auto btn-orange-glow px-9 py-3.5 rounded-full font-extrabold text-white text-center text-lg tracking-wide transition-all duration-300">
                     Cotizar Evento
                 </a>
             </div>
@@ -316,27 +392,27 @@
         <section id="eventos" class="py-20 bg-zinc-900/40 border-y border-zinc-800/60 scroll-mt-24">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
                 <div class="reveal">
-                    <h2 class="text-3xl sm:text-5xl font-black text-white mb-6 flex items-center justify-center gap-3">
-                        ¿Tienes una fiesta o reunión? <span>🎉</span>
+                    <h2 class="text-3xl sm:text-5xl font-black text-white mb-6">
+                        ¿Tienes una fiesta o reunión?
                     </h2>
                     <p class="text-zinc-300 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto mb-10">
                         Llevamos nuestro carrito directamente a tu evento. Nos encargamos de todo para que tú solo te dediques a disfrutar con tus invitados.
                     </p>
                 </div>
 
-                <!-- Event Bullet Points -->
+                <!-- Event Bullet Points con Alto Contraste -->
                 <div class="reveal space-y-4 max-w-md mx-auto text-left mb-10">
-                    <div class="flex items-center gap-3 text-zinc-200 text-base sm:text-lg font-semibold">
+                    <div class="flex items-center gap-3 text-zinc-200 text-base sm:text-lg font-bold">
                         <span class="text-xl">✨</span>
-                        <span>Servicio 100% personalizado</span>
+                        <span class="event-bullet-text">Servicio 100% personalizado</span>
                     </div>
-                    <div class="flex items-center gap-3 text-zinc-200 text-base sm:text-lg font-semibold">
+                    <div class="flex items-center gap-3 text-zinc-200 text-base sm:text-lg font-bold">
                         <span class="text-xl">🔥</span>
-                        <span>Ingredientes frescos y calientitos</span>
+                        <span class="event-bullet-text">Ingredientes frescos y calientitos</span>
                     </div>
-                    <div class="flex items-center gap-3 text-zinc-200 text-base sm:text-lg font-semibold">
+                    <div class="flex items-center gap-3 text-zinc-200 text-base sm:text-lg font-bold">
                         <span class="text-xl">🎈</span>
-                        <span>Ideal para cumpleaños, bodas y reuniones</span>
+                        <span class="event-bullet-text">Ideal para cumpleaños, bodas y reuniones</span>
                     </div>
                 </div>
 
@@ -352,8 +428,8 @@
         <!-- Location Section -->
         <section id="ubicacion" class="py-20 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto text-center scroll-mt-24">
             <div class="reveal mb-8">
-                <h2 class="text-3xl sm:text-5xl font-black text-white mb-4 flex items-center justify-center gap-2">
-                    <span class="text-red-500">📍</span> ¿Dónde nos encontramos?
+                <h2 class="text-3xl sm:text-5xl font-black text-white mb-4">
+                    ¿Dónde nos encontramos?
                 </h2>
                 <p class="text-zinc-300 text-lg sm:text-xl font-medium mt-2">
                     Calle Noche Buena #248 Cantoral Pesqueria
@@ -361,7 +437,7 @@
             </div>
 
             <!-- Operating Hours Highlight Box -->
-            <div class="reveal max-w-xl mx-auto bg-brandCard/90 border-2 border-dashed border-yellow-500/80 rounded-2xl p-6 sm:p-8">
+            <div class="reveal hours-box max-w-xl mx-auto bg-brandCard/90 border-2 border-dashed border-yellow-500/80 rounded-2xl p-6 sm:p-8">
                 <h3 class="text-lg sm:text-xl font-bold text-white mb-2">
                     Horarios de atención:
                 </h3>
@@ -375,7 +451,7 @@
     <!-- Footer Section -->
     <footer class="bg-black border-t border-zinc-900 py-12 px-4 sm:px-6 text-center">
         <div class="max-w-4xl mx-auto">
-            <p class="italic text-brandYellow text-base sm:text-lg font-medium max-w-2xl mx-auto mb-8 leading-relaxed opacity-100">
+            <p class="italic text-brandYellow text-base sm:text-lg font-bold max-w-2xl mx-auto mb-8 leading-relaxed opacity-100">
                 "Empezamos en la banqueta, pero los sueños no tienen límites. Gracias por ser parte de cada bocado y apoyar este proyecto hecho con el corazón."
             </p>
             <p class="text-zinc-500 text-xs sm:text-sm font-medium">
@@ -423,6 +499,42 @@
 
     <!-- Application Interactive Logic -->
     <script>
+        // Lógica de Conmutación de Modo Oscuro / Modo Claro
+        function toggleTheme() {
+            const html = document.documentElement;
+            const icon = document.getElementById('themeIcon');
+            const iconMobile = document.getElementById('themeIconMobile');
+
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+                if (icon) icon.className = 'fa-solid fa-moon text-lg text-slate-700';
+                if (iconMobile) iconMobile.className = 'fa-solid fa-moon text-base text-slate-700';
+            } else {
+                html.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+                if (icon) icon.className = 'fa-solid fa-sun text-lg text-yellow-400';
+                if (iconMobile) iconMobile.className = 'fa-solid fa-sun text-base text-yellow-400';
+            }
+        }
+
+        // Cargar Tema Preferido (Predeterminado: Modo Oscuro)
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            const icon = document.getElementById('themeIcon');
+            const iconMobile = document.getElementById('themeIconMobile');
+
+            if (savedTheme === 'light') {
+                document.documentElement.classList.remove('dark');
+                if (icon) icon.className = 'fa-solid fa-moon text-lg text-slate-700';
+                if (iconMobile) iconMobile.className = 'fa-solid fa-moon text-base text-slate-700';
+            } else {
+                document.documentElement.classList.add('dark');
+                if (icon) icon.className = 'fa-solid fa-sun text-lg text-yellow-400';
+                if (iconMobile) iconMobile.className = 'fa-solid fa-sun text-base text-yellow-400';
+            }
+        }
+
         // Menu Items State Data
         const menuData = {
             clasico: { name: 'El Clásico', price: 35, qty: 0 },
@@ -431,17 +543,13 @@
             refresco: { name: 'Refresco Bien Frío', price: 25, qty: 0 }
         };
 
-        /**
-         * Automatic Store Open/Closed Calculation based on Real Device Clock
-         * Opening Hours: Thursday - Sunday (4, 5, 6, 0 in JS Date), 18:00 to 23:30 hrs
-         */
         function calculateStoreStatus() {
             const now = new Date();
             const day = now.getDay(); 
             const currentMinutes = (now.getHours() * 60) + now.getMinutes();
 
-            const openMinutes = 18 * 60;        // 18:00 (6:00 PM) = 1080 mins
-            const closeMinutes = (23 * 60) + 30; // 23:30 (11:30 PM) = 1410 mins
+            const openMinutes = 18 * 60;        
+            const closeMinutes = (23 * 60) + 30; 
 
             const isOpenDay = (day === 4 || day === 5 || day === 6 || day === 0);
             const isOpenTime = (currentMinutes >= openMinutes && currentMinutes <= closeMinutes);
@@ -462,7 +570,6 @@
                 banner.appendChild(dotSpan);
                 banner.appendChild(textSpan);
             } else {
-                // Banner totalmente extendido de borde a borde para evitar espacios o sombras recortadas
                 banner.className = "sticky top-0 z-50 w-full text-center py-2.5 px-4 font-bold text-xs sm:text-sm tracking-wide bg-red-950 text-red-300 border-b border-red-800/80 flex items-center justify-center gap-2 shadow-lg relative overflow-hidden";
                 
                 banner.textContent = '';
@@ -475,12 +582,10 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
             calculateStoreStatus();
             setInterval(calculateStoreStatus, 60000);
 
-            /**
-             * Scroll Animations Logic
-             */
             let lastScrollY = window.scrollY;
 
             function checkRevealOnScroll() {
@@ -503,7 +608,6 @@
             checkRevealOnScroll();
             window.addEventListener('scroll', checkRevealOnScroll, { passive: true });
 
-            // Smooth Scroll for internal hash anchor links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
                     const targetId = this.getAttribute('href');
@@ -522,7 +626,6 @@
             });
         });
 
-        // Mobile Menu Drawer Controls
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const mobileMenu = document.getElementById('mobileMenu');
 
@@ -536,7 +639,6 @@
             }
         }
 
-        // Quantity Adjuster Function
         function updateQty(itemId, change) {
             if (!menuData[itemId]) return;
 
@@ -622,7 +724,6 @@
             }
         }
 
-        // Toggle Cart Drawer
         function toggleCartDrawer(open) {
             const drawer = document.getElementById('cartDrawer');
             const overlay = document.getElementById('cartOverlay');
