@@ -838,7 +838,7 @@
                 <span class="reviews-eyebrow">Opiniones de clientes</span>
                 <h2 class="font-brand-title">Tu opinión cuenta</h2>
                 <p class="text-muted-brand">
-                    Cuéntanos cómo fue tu experiencia. Las reseñas se publican automáticamente.
+                    Cuéntanos cómo fue tu experiencia. Las reseñas sin lenguaje ofensivo se publican automáticamente.
                 </p>
             </div>
 
@@ -1123,27 +1123,34 @@
                 submitButton.disabled = true;
                 setReviewStatus('Enviando reseña...');
                 try {
-                    const response = await fetch(`${config.url}/rest/v1/reviews`, {
+                    const response = await fetch(`${config.url}/rest/v1/rpc/submit_review`, {
                         method: 'POST',
                         headers: {
                             apikey: config.anonKey,
                             Authorization: `Bearer ${config.anonKey}`,
                             'Content-Type': 'application/json',
-                            Prefer: 'return=minimal'
                         },
                         body: JSON.stringify({
-                            display_name: document.getElementById('reviewName').value.trim() || null,
-                            review_text: reviewText,
-                            rating: selectedReviewRating,
-                            status: 'approved'
+                            p_display_name: document.getElementById('reviewName').value.trim() || null,
+                            p_review_text: reviewText,
+                            p_rating: selectedReviewRating
                         })
                     });
                     if (!response.ok) throw new Error(`No se pudo enviar la reseña (${response.status}).`);
 
+                    const moderationStatus = await response.json();
+                    if (moderationStatus === 'rejected') {
+                        setReviewStatus('No pudimos aceptar la reseña porque contiene lenguaje no permitido. Edita el texto e inténtalo de nuevo.', true);
+                        return;
+                    }
+                    if (moderationStatus !== 'approved') {
+                        throw new Error('El servicio devolvió un estado de moderación desconocido.');
+                    }
+
                     form.reset();
                     selectReviewRating(0);
                     updateReviewWordCount();
-                    setReviewStatus('¡Gracias! Tu reseña ha sido publicada.');
+                    setReviewStatus('¡Gracias! Tu reseña fue publicada.');
                     loadReviews(config);
                 } catch (error) {
                     console.error('Error al enviar reseña:', error);
