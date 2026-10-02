@@ -3,161 +3,544 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hot Dogs La Familia - ¡El verdadero sabor de la calle!</title>
+    <title>Hot Dogs La Familia</title>
 
-    <!-- Content Security Policy (CSP) permitting essential CDNs -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self';">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <!-- Hot Dog Favicon -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌭</text></svg>">
+    <!-- Favicon Icon -->
+    <link rel="icon" type="image/svg+xml" href="ICONO.svg">
 
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        brandDark: '#0d0d0d',
-                        brandCard: '#181818',
-                        brandOrange: '#ff4500',
-                        brandOrangeHover: '#e03e00',
-                        brandYellow: '#ffcc00',
-                        brandYellowDark: '#d97706',
-                        brandGreen: '#22c55e',
-                        brandRed: '#ef4444'
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
-
-    <!-- Google Fonts Inter & FontAwesome Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS compilado localmente para uso offline -->
+    <link rel="stylesheet" href="tailwind.css">
+    
+    <!-- Google Fonts: Syne (Titulares) & Plus Jakarta Sans (Cuerpo) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Custom CSS Animations & Styling -->
     <style>
-        /* Modo Oscuro Default */
+        /* Tipografía e Identidad */
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0d0d0d;
-            color: #ffffff;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #1E1818;
+            color: #FAF7F2;
             overflow-x: hidden;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        /* Soporte Modo Claro - Gris suave mate (Slate-100) */
-        html:not(.dark) body {
-            background-color: #f1f5f9;
-            color: #020617;
+        h1, h2, h3, h4, .font-brand-title {
+            font-family: 'Syne', sans-serif;
         }
 
-        /* Ajustes de Contraste y Colores para Modo Claro */
-        html:not(.dark) header {
-            background-color: rgba(255, 255, 255, 0.95) !important;
-            border-color: #cbd5e1 !important;
+        /* Soporte Modo Claro (Crema Orgánico #FAF7F2) con Alto Contraste */
+        html:not(.dark) body {
+            background-color: #FAF7F2;
+            color: #1E1818;
         }
+
+        html:not(.dark) header {
+            background-color: #FAF7F2 !important;
+            border-color: #D8CEBE !important;
+        }
+
+        html:not(.dark) #mobileMenu {
+            background-color: #FAF7F2 !important;
+            border-color: #D8CEBE !important;
+        }
+
+        html:not(.dark) #mobileMenu a {
+            color: #1E1818 !important;
+        }
+
+        html:not(.dark) .theme-toggle-btn {
+            background-color: #F0EAE1 !important;
+            border-color: #D8CEBE !important;
+        }
+
+        html:not(.dark) #reviewForm input,
+        html:not(.dark) #reviewForm textarea {
+            color: #1E1818;
+            background-color: #F5EFE6;
+            border-color: #D8CEBE;
+        }
+
+        html:not(.dark) #reviewForm input::placeholder,
+        html:not(.dark) #reviewForm textarea::placeholder {
+            color: #756C62;
+        }
+
+        html:not(.dark) .review-card {
+            background-color: #FFFFFF;
+            border-color: #D8CEBE;
+        }
+
+        .reviews-section {
+            max-width: 80rem;
+            margin: 0 auto;
+            padding: 4rem 1rem 5rem;
+            scroll-margin-top: 10rem;
+        }
+
+        .reviews-heading {
+            margin-bottom: 2.5rem;
+            text-align: center;
+        }
+
+        .reviews-eyebrow {
+            color: #E69A28;
+            font-size: 0.75rem;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .reviews-heading h2 {
+            margin: 0.5rem 0 0;
+            color: #FAF7F2;
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+        }
+
+        .reviews-heading p,
+        .review-form-description {
+            max-width: 38rem;
+            margin: 0.75rem auto 0;
+            color: #b9b3ad;
+            font-size: 0.95rem;
+        }
+
+        .reviews-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr);
+            align-items: start;
+            gap: 2rem;
+        }
+
+        .reviews-status {
+            padding: 1.25rem 0;
+            color: #b9b3ad;
+            font-size: 0.875rem;
+            text-align: center;
+        }
+
+        .reviews-list {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr);
+            gap: 1rem;
+        }
+
+        .review-card,
+        .review-form {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            background: #2b2424;
+        }
+
+        .review-card {
+            padding: 1.25rem;
+        }
+
+        .review-stars {
+            margin: 0 0 0.75rem;
+            color: #E69A28;
+            font-size: 1.125rem;
+            letter-spacing: 0.08em;
+        }
+
+        .review-copy {
+            margin: 0;
+            color: #e5e1dc;
+            font-size: 0.9rem;
+            line-height: 1.65;
+            overflow-wrap: anywhere;
+        }
+
+        .review-author {
+            margin: 1rem 0 0;
+            color: #b9b3ad;
+            font-size: 0.75rem;
+            font-weight: 800;
+        }
+
+        .review-form {
+            padding: 1.5rem;
+        }
+
+        .review-form h3 {
+            margin: 0;
+            color: #FAF7F2;
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+
+        .review-form-description {
+            margin: 0.5rem 0 1.5rem;
+        }
+
+        .review-form label,
+        .review-rating legend {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #FAF7F2;
+            font-size: 0.875rem;
+            font-weight: 800;
+        }
+
+        .review-form label span {
+            font-weight: 400;
+            color: #b9b3ad;
+        }
+
+        .review-form input,
+        .review-form textarea {
+            display: block;
+            width: 100%;
+            margin-bottom: 1.25rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.75rem 1rem;
+            color: #FAF7F2;
+            font: inherit;
+        }
+
+        .review-form input::placeholder,
+        .review-form textarea::placeholder {
+            color: #918981;
+        }
+
+        .review-form input:focus,
+        .review-form textarea:focus {
+            outline: 2px solid #E69A28;
+            outline-offset: 1px;
+        }
+
+        .review-form textarea {
+            min-height: 7rem;
+            resize: vertical;
+        }
+
+        .review-rating {
+            margin: 0 0 1.25rem;
+            padding: 0;
+            border: 0;
+        }
+
+        .review-rating > div {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .review-star {
+            border: 0;
+            background: transparent;
+            color: #756c62;
+            cursor: pointer;
+            font-size: 1.75rem;
+            line-height: 1;
+        }
+
+        .review-star.is-selected,
+        .review-star:hover,
+        .review-star:focus-visible {
+            color: #E69A28;
+        }
+
+        .review-star:focus-visible {
+            outline: 2px solid #E69A28;
+            outline-offset: 3px;
+        }
+
+        .review-word-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: -0.75rem 0 1.25rem;
+            color: #b9b3ad;
+            font-size: 0.75rem;
+        }
+
+        .review-form-status {
+            margin: 0 0 1rem;
+            color: #6ee7b7;
+            font-size: 0.875rem;
+        }
+
+        .review-form-status.hidden {
+            display: none;
+        }
+
+        .review-form-status.is-error {
+            color: #fca5a5;
+        }
+
+        .review-submit {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 0;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 800;
+        }
+
+        .review-submit:disabled {
+            cursor: not-allowed;
+            opacity: 0.55;
+        }
+
+        html:not(.dark) .reviews-heading h2,
+        html:not(.dark) .review-form h3,
+        html:not(.dark) .review-form label,
+        html:not(.dark) .review-rating legend {
+            color: #1E1818;
+        }
+
+        html:not(.dark) .reviews-heading p,
+        html:not(.dark) .review-form-description,
+        html:not(.dark) .reviews-status,
+        html:not(.dark) .review-copy,
+        html:not(.dark) .review-author,
+        html:not(.dark) .review-word-row {
+            color: #383030;
+        }
+
+        html:not(.dark) .review-card,
+        html:not(.dark) .review-form {
+            border-color: #D8CEBE;
+            background: #FFFFFF;
+            box-shadow: 0 10px 30px -5px rgba(30, 24, 24, 0.08);
+        }
+
+        html:not(.dark) .review-form label span {
+            color: #756C62;
+        }
+
+        @media (min-width: 640px) {
+            .reviews-section {
+                padding: 5rem 1.5rem;
+            }
+
+            .reviews-list {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .review-form {
+                padding: 2rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .reviews-layout {
+                grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+            }
+        }
+
+        #mobileMenu {
+            max-height: 0;
+            overflow: hidden;
+            padding-top: 0;
+            padding-bottom: 0;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        #mobileMenu.is-open {
+            max-height: 12rem;
+            padding-top: 1.25rem;
+            padding-bottom: 1.25rem;
+        }
+
+        #statusBanner {
+            overflow: hidden;
+        }
+
+        .status-message-pulse {
+            display: inline-block;
+            animation: status-message-pulse 2s ease-in-out infinite;
+            transform-origin: center;
+        }
+
+        @keyframes status-message-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.04); }
+        }
+
         html:not(.dark) .nav-link {
-            color: #1e293b !important;
+            color: #1E1818 !important;
         }
         html:not(.dark) .nav-link:hover {
-            color: #d97706 !important;
+            color: #C84B31 !important;
         }
-        html:not(.dark) .menu-card, 
-        html:not(.dark) .card-special-glow,
+
+        .brand-logo-svg {
+            color: #fff;
+        }
+
+        html:not(.dark) .brand-logo-svg {
+            color: #1e1b18;
+        }
+
+        /* Textos e Histogramas en Modo Claro */
+        html:not(.dark) h1, 
+        html:not(.dark) h2, 
+        html:not(.dark) h3, 
+        html:not(.dark) h4,
+        html:not(.dark) .text-white {
+            color: #1E1818 !important;
+        }
+
+        html:not(.dark) h4.text-brandMustard {
+            color: #E69A28 !important;
+        }
+
+        html:not(.dark) .text-gray-300,
+        html:not(.dark) .text-gray-400,
+        html:not(.dark) .text-muted-brand {
+            color: #383030 !important;
+        }
+
+        /* Tarjetas y Carrito en Modo Claro */
+        html:not(.dark) .brand-card, 
+        html:not(.dark) .special-glow-card,
         html:not(.dark) .hours-box,
         html:not(.dark) #cartDrawer {
-            background-color: #ffffff !important;
-            border-color: #cbd5e1 !important;
-            box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08);
+            background-color: #FFFFFF !important;
+            border-color: #D8CEBE !important;
+            box-shadow: 0 10px 30px -5px rgba(30, 24, 24, 0.08);
         }
-        html:not(.dark) .menu-card h3,
-        html:not(.dark) .card-special-glow h3,
-        html:not(.dark) .hours-box h3,
-        html:not(.dark) h1, html:not(.dark) h2,
-        html:not(.dark) .text-white {
-            color: #020617 !important;
+
+        /* Elementos del Carrito en Modo Claro */
+        html:not(.dark) #cartItemsList > div {
+            background-color: #F5EFE6 !important;
+            border-color: #E2DACD !important;
         }
-        html:not(.dark) .text-zinc-400,
-        html:not(.dark) .text-zinc-300,
-        html:not(.dark) .text-zinc-200,
-        html:not(.dark) .hours-box p,
-        html:not(.dark) .event-bullet-text {
-            color: #020617 !important;
-            font-weight: 700;
+        html:not(.dark) #cartItemsList h4,
+        html:not(.dark) #cartItemsList span {
+            color: #1E1818 !important;
         }
-        html:not(.dark) .text-brandYellow {
-            color: #d97706 !important;
+
+        html:not(.dark) .bg-subtle-box {
+            background-color: #F0EAE1 !important;
+            border-color: #D8CEBE !important;
         }
-        html:not(.dark) .bg-zinc-800 {
-            background-color: #e2e8f0 !important;
-            border-color: #94a3b8 !important;
-        }
-        html:not(.dark) .bg-zinc-800 button {
-            background-color: #cbd5e1 !important;
-            color: #020617 !important;
-        }
-        html:not(.dark) .bg-zinc-800 button:hover {
-            background-color: #94a3b8 !important;
-        }
-        html:not(.dark) section#eventos {
-            background-color: #e2e8f0 !important;
-            border-color: #cbd5e1 !important;
-        }
+        
         html:not(.dark) footer {
-            background-color: #e2e8f0 !important;
-            border-color: #cbd5e1 !important;
+            background-color: #EAE3D8 !important;
+            border-color: #D8CEBE !important;
         }
 
-        /* Glowing Orange Button Effect */
-        .btn-orange-glow {
-            background-color: #ff4500;
-            box-shadow: 0 0 22px rgba(255, 69, 0, 0.55);
-            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        /* Glow & Buttons con Colores de Marca */
+        .btn-mustard {
+            background-color: #E69A28;
+            color: #1E1818 !important;
+            box-shadow: 0 4px 18px rgba(230, 154, 40, 0.35);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .btn-orange-glow:hover {
-            background-color: #ff5514;
-            box-shadow: 0 0 32px rgba(255, 69, 0, 0.85);
+        .btn-mustard:hover {
+            background-color: #F5A732;
             transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(230, 154, 40, 0.5);
         }
 
-        /* Gold Card Highlight Glow for Specialty Item */
-        .card-special-glow {
-            border: 2px solid #ffcc00;
-            box-shadow: 0 0 18px rgba(255, 204, 0, 0.3);
+        #cartFloatingBtn.cart-explode {
+            animation: cart-bubble-pop 420ms ease-out;
+        }
+        #cartFloatingBtn.cart-explode::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border: 2px solid #E69A28;
+            border-radius: 9999px;
+            pointer-events: none;
+            animation: cart-bubble-burst 420ms ease-out;
+        }
+        @keyframes cart-bubble-pop {
+            0%, 100% { transform: scale(1); }
+            35% { transform: scale(1.16); }
+            65% { transform: scale(0.94); }
+        }
+        @keyframes cart-bubble-burst {
+            0% { opacity: 0.85; transform: scale(0.75); }
+            100% { opacity: 0; transform: scale(1.8); }
+        }
+
+        .btn-terracotta {
+            background-color: #C84B31;
+            color: #FFFFFF !important;
+            box-shadow: 0 4px 18px rgba(200, 75, 49, 0.35);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .btn-terracotta:hover {
+            background-color: #DC563B;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(200, 75, 49, 0.5);
+        }
+        .cancel-order-btn {
+            width: 100%;
+            margin-top: 0.75rem;
+            padding: 0.75rem 1rem;
+            border: 1px solid #C84B31;
+            border-radius: 0.75rem;
+            background: transparent;
+            color: #F08068;
+            font-weight: 700;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+        .cancel-order-btn:hover:not(:disabled) {
+            background-color: #C84B31;
+            color: #fff;
+        }
+        .cancel-order-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        html:not(.dark) .cancel-order-btn {
+            color: #A83420;
+        }
+        html:not(.dark) .cancel-order-btn:hover:not(:disabled) {
+            color: #fff;
+        }
+
+        .hero-headline-accent {
+            display: inline-block;
+            color: #E69A28;
+            text-shadow: 0 0 24px rgba(230, 154, 40, 0.3);
+        }
+
+        /* Tarjeta Especial Highlight */
+        .special-glow-card {
+            border: 2px solid #E69A28;
+            box-shadow: 0 0 20px rgba(230, 154, 40, 0.2);
             transition: all 0.35s ease;
         }
-        .card-special-glow:hover {
-            box-shadow: 0 0 30px rgba(255, 204, 0, 0.5);
+        .special-glow-card:hover {
+            box-shadow: 0 0 30px rgba(230, 154, 40, 0.4);
             transform: translateY(-4px);
         }
 
-        /* Standard Card Hover Transition */
-        .menu-card {
+        .brand-card {
             transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .menu-card:hover {
+        .brand-card:hover {
             transform: translateY(-4px);
         }
 
-        /* Green WhatsApp Glow Effect */
+        /* Botón WhatsApp */
         .whatsapp-glow {
-            box-shadow: 0 0 20px rgba(37, 211, 102, 0.6);
+            background-color: #25D366;
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
             transition: all 0.35s ease;
         }
         .whatsapp-glow:hover {
-            box-shadow: 0 0 32px rgba(37, 211, 102, 0.9);
-            transform: scale(1.08);
+            transform: scale(1.08) translateY(-2px);
+            box-shadow: 0 10px 28px rgba(37, 211, 102, 0.6);
         }
 
-        /* Intersection Observer Reveal Animation */
+        /* Revelado On-Scroll */
         .reveal {
             opacity: 0;
             transform: translateY(30px);
@@ -169,337 +552,397 @@
             transform: translateY(0);
         }
 
-        /* Slow & Elegant Cart Drawer Slide Transition */
+        /* Cart Slide Transition */
         .cart-drawer-slide {
-            transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* Animación fluida para el texto del banner */
-        @keyframes subtleTextPulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.03);
-            }
-        }
-        .text-scale-pulse {
-            display: inline-block;
-            animation: subtleTextPulse 2.8s ease-in-out infinite;
-            transform-origin: center center;
-            will-change: transform;
-        }
-
-        /* Custom Webkit Scrollbar */
+        /* Webkit Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #0d0d0d;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #2b2b2b;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #ff4500;
+            background: #1E1818;
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between relative selection:bg-orange-600 selection:text-white">
+<body class="bg-brandCharcoal text-brandCream antialiased selection:bg-brandMustard selection:text-brandCharcoal">
 
-    <!-- Automatic Live Store Status Banner -->
-    <div id="statusBanner" class="w-full text-center py-2.5 px-4 font-bold text-xs sm:text-sm tracking-wide transition-all duration-500 border-b border-zinc-800">
-        <!-- Content inserted dynamically by calculateStoreStatus() JS -->
-    </div>
+    <div class="sticky top-0 z-40">
+        <!-- Status Banner Indicator -->
+        <div id="statusBanner" class="relative z-20 w-full text-center py-2.5 px-4 font-bold text-xs sm:text-sm tracking-wide bg-brandTerracotta text-white border-b border-brandTerracotta">
+            <span>Cargando estado del establecimiento...</span>
+        </div>
 
-    <!-- Header Navigation -->
-    <header class="bg-[#0d0d0d]/90 backdrop-blur-md border-b border-zinc-800/80 transition-all duration-300">
+        <!-- Header / Navigation Bar -->
+        <header class="bg-brandCharcoal border-b border-white/10 transition-colors duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             
-            <!-- Logo -->
-            <a href="#" class="flex items-center gap-2.5 group">
-                <span class="text-3xl sm:text-4xl transition-transform duration-300 group-hover:scale-125 group-hover:rotate-12">🌭</span>
-                <div class="text-xl sm:text-2xl font-black tracking-tight flex items-center gap-1.5">
-                    <span class="text-brandYellow">Hot Dogs</span>
-                    <span class="text-white">La Familia</span>
-                </div>
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center group">
+                <svg role="img" aria-label="Hot Dogs La Familia" viewBox="0 0 2514.52 393.29" class="brand-logo-svg h-10 sm:h-12 w-auto transition-transform group-hover:scale-105">
+                    <use href="LOGO.svg#LOGO_PRINCIPAL"></use>
+                </svg>
             </a>
 
             <!-- Desktop Links -->
-            <nav class="hidden md:flex items-center space-x-6">
-                <a href="#menu" class="nav-link font-bold text-gray-200 hover:text-brandYellow transition-colors duration-200 py-2">Menú</a>
-                <a href="#eventos" class="nav-link font-bold text-gray-200 hover:text-brandYellow transition-colors duration-200 py-2">Eventos</a>
-                <a href="#ubicacion" class="nav-link font-bold text-gray-200 hover:text-brandYellow transition-colors duration-200 py-2">Ubicación</a>
+            <nav class="hidden md:flex items-center space-x-7">
+                <a href="#menu" class="nav-link font-semibold text-sm text-gray-300 hover:text-brandMustard transition-colors py-2">Menú</a>
+                <a href="#resenas" class="nav-link font-semibold text-sm text-gray-300 hover:text-brandMustard transition-colors py-2">Reseñas</a>
+                <a href="#eventos" class="nav-link font-semibold text-sm text-gray-300 hover:text-brandMustard transition-colors py-2">Eventos</a>
+                <a href="#ubicacion" class="nav-link font-semibold text-sm text-gray-300 hover:text-brandMustard transition-colors py-2">Ubicación</a>
                 
                 <!-- Theme Toggle Button Desktop -->
-                <button id="themeToggleBtn" onclick="toggleTheme()" class="p-2.5 rounded-full bg-zinc-800 hover:bg-zinc-700 text-yellow-400 transition duration-300" aria-label="Cambiar Tema">
-                    <i id="themeIcon" class="fa-solid fa-sun text-lg"></i>
+                <button id="themeToggleBtn" onclick="toggleTheme()" class="theme-toggle-btn p-2.5 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 text-brandMustard transition duration-300" aria-label="Cambiar Tema">
+                    <i id="themeIcon" class="fa-solid fa-sun text-base"></i>
                 </button>
 
-                <!-- Cart Header Trigger Button -->
-                <button id="cartNavBtn" onclick="toggleCartDrawer(true)" class="hidden btn-orange-glow px-4 py-2 rounded-full font-bold text-white flex items-center gap-2 text-sm">
-                    <i class="fa-solid fa-cart-shopping"></i>
-                    <span>Ver Carrito</span>
-                    <span id="cartCountBadge" class="bg-white text-brandOrange font-extrabold text-xs px-2 py-0.5 rounded-full ml-1">0</span>
-                </button>
             </nav>
 
             <!-- Mobile Action Buttons -->
-            <div class="flex items-center gap-2 md:hidden">
-                <!-- Theme Toggle Button Mobile -->
-                <button onclick="toggleTheme()" class="p-2 rounded-full bg-zinc-800 hover:bg-zinc-700 text-yellow-400 transition duration-300" aria-label="Cambiar Tema">
-                    <i id="themeIconMobile" class="fa-solid fa-sun text-base"></i>
+            <div class="flex items-center gap-2.5 md:hidden">
+                <button onclick="toggleTheme()" class="theme-toggle-btn p-2 rounded-full bg-white/5 border border-white/10 text-brandMustard" aria-label="Cambiar Tema">
+                    <i id="themeIconMobile" class="fa-solid fa-sun text-sm"></i>
                 </button>
 
-                <button id="cartNavBtnMobile" onclick="toggleCartDrawer(true)" class="hidden btn-orange-glow px-3 py-1.5 rounded-full font-bold text-white flex items-center gap-1.5 text-xs">
-                    <i class="fa-solid fa-cart-shopping"></i>
-                    <span id="cartCountBadgeMobile" class="bg-white text-brandOrange font-extrabold text-xs px-1.5 py-0.2 rounded-full">0</span>
-                </button>
-                <button id="mobileMenuBtn" class="text-white text-2xl p-2 focus:outline-none focus:text-brandYellow" aria-label="Abrir Menú Mobile">
+                <button id="mobileMenuBtn" class="text-white text-xl p-2 focus:outline-none" aria-label="Abrir Menú" aria-expanded="false">
                     <i class="fa-solid fa-bars"></i>
                 </button>
             </div>
         </div>
 
-        <!-- Mobile Drawer Links -->
-        <div id="mobileMenu" class="hidden md:hidden bg-[#141414] border-b border-zinc-800 px-6 py-4 space-y-4">
-            <a href="#menu" onclick="closeMobileMenu()" class="block font-bold text-lg text-gray-200 hover:text-brandYellow py-1">Menú</a>
-            <a href="#eventos" onclick="closeMobileMenu()" class="block font-bold text-lg text-gray-200 hover:text-brandYellow py-1">Eventos</a>
-            <a href="#ubicacion" onclick="closeMobileMenu()" class="block font-bold text-lg text-gray-200 hover:text-brandYellow py-1">Ubicación</a>
+        <!-- Mobile Navigation Menu -->
+        <div id="mobileMenu" class="md:hidden bg-brandCharcoal border-b border-white/10 px-6 space-y-3" aria-hidden="true" inert>
+            <a href="#menu" onclick="closeMobileMenu()" class="block font-semibold text-gray-200 hover:text-brandMustard py-1">Menú</a>
+            <a href="#resenas" onclick="closeMobileMenu()" class="block font-semibold text-gray-200 hover:text-brandMustard py-1">Reseñas</a>
+            <a href="#eventos" onclick="closeMobileMenu()" class="block font-semibold text-gray-200 hover:text-brandMustard py-1">Eventos & Catering</a>
+            <a href="#ubicacion" onclick="closeMobileMenu()" class="block font-semibold text-gray-200 hover:text-brandMustard py-1">Ubicación</a>
         </div>
-    </header>
+        </header>
 
-    <main>
-        <section class="relative py-20 lg:py-28 px-4 sm:px-6 lg:px-8 text-center max-w-5xl mx-auto flex flex-col items-center justify-center min-h-[75vh]">
+    <button id="cartFloatingBtn" onclick="toggleCartDrawer(true)" class="hidden absolute top-full right-4 mt-3 z-40 btn-mustard w-14 h-14 rounded-full flex items-center justify-center text-xl shadow-lg" aria-label="Abrir carrito">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span id="cartCountBadge" class="absolute -top-1 -right-1 min-w-6 h-6 px-1 bg-brandCharcoal text-brandMustard border-2 border-brandMustard rounded-full flex items-center justify-center text-xs font-extrabold">0</span>
+    </button>
+    </div>
+
+    <main class="relative z-10">
+        <!-- Hero Section -->
+        <section class="relative pt-8 pb-8 sm:pt-10 sm:pb-10 lg:pt-12 lg:pb-12 px-4 sm:px-6 lg:px-8 text-center max-w-5xl mx-auto flex flex-col items-center justify-center">
             
-            <!-- Gold Badge Pill -->
-            <div class="reveal active inline-flex items-center gap-2 px-5 py-2 rounded-full border border-yellow-500/80 bg-zinc-900/70 mb-8 shadow-lg">
-                <span class="text-sm sm:text-base">🔥</span>
-                <span class="text-xs sm:text-sm font-bold tracking-wider uppercase text-yellow-400">LOS MÁS SABROSOS DE LA ZONA</span>
+            <!-- Brand Tagline Badge -->
+            <div class="reveal active inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-brandMustard/40 bg-brandMustard/10 mb-6">
+                <span class="w-2 h-2 rounded-full bg-brandMustard animate-pulse"></span>
+                <span class="text-xs sm:text-sm font-bold tracking-widest uppercase text-brandMustard">LOS MÁS SABROSOS</span>
             </div>
 
             <!-- Headline -->
-            <h1 class="reveal active text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-tight text-white mb-8">
+            <h1 class="reveal active font-brand-title text-4xl sm:text-6xl md:text-7xl font-extrabold leading-[0.96] text-white mb-6">
                 ¡EL VERDADERO SABOR<br>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-orange-600 to-amber-500">DE LA CALLE!</span>
+                <span class="hero-headline-accent">DE LA CALLE!</span>
             </h1>
-
-            <!-- Hero Action Buttons -->
-            <div class="reveal active flex flex-col sm:flex-row items-center justify-center gap-4 w-full max-w-md">
-                <a href="#menu" class="w-full sm:w-auto btn-orange-glow px-9 py-3.5 rounded-full font-extrabold text-white text-center text-lg tracking-wide transition-all duration-300">
-                    Ver Menú
-                </a>
-                <a href="#eventos" class="w-full sm:w-auto btn-orange-glow px-9 py-3.5 rounded-full font-extrabold text-white text-center text-lg tracking-wide transition-all duration-300">
-                    Cotizar Evento
-                </a>
-            </div>
         </section>
 
-        <!-- Menu Section ("Arma tu Pedido") -->
-        <section id="menu" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-24">
+        <!-- Hero Action Buttons -->
+        <div class="px-4 sm:px-6 lg:px-8 py-8 sm:py-10 flex justify-center">
+            <div class="reveal active flex flex-col sm:flex-row items-center justify-center gap-4 w-full max-w-md">
+                <a href="#menu" class="w-full sm:w-auto btn-mustard px-8 py-3.5 rounded-xl font-extrabold text-center text-base tracking-wide">
+                    Explorar Menú
+                </a>
+                <a href="#eventos" class="w-full sm:w-auto btn-terracotta px-8 py-3.5 rounded-xl font-extrabold text-center text-base tracking-wide">
+                    Cotizar Eventos
+                </a>
+            </div>
+        </div>
+
+        <!-- Menu Section ("Menú") -->
+        <section id="menu" class="pt-8 pb-20 sm:pt-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-24 border-t border-white/10">
             <div class="text-center mb-14 reveal">
-                <h2 class="text-3xl sm:text-5xl font-black text-white tracking-tight">
-                    Arma tu <span class="text-brandYellow">Pedido</span>
+                <h2 class="font-brand-title text-3xl sm:text-5xl font-extrabold text-white mt-1">
+                    Menú
                 </h2>
+                <p class="text-gray-400 text-sm sm:text-base mt-2 max-w-xl mx-auto text-muted-brand">
+                    Selecciona tus favoritos y haz tu pedido directo a nuestro WhatsApp.
+                </p>
             </div>
 
             <!-- Menu Cards Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 
                 <!-- Item 1: El Clásico -->
-                <div class="reveal menu-card relative bg-brandCard rounded-3xl p-6 border border-zinc-800/80 flex flex-col justify-between">
+                <div class="reveal brand-card relative bg-brandCardDark rounded-2xl p-6 border border-white/10 flex flex-col justify-between">
                     <div>
-                        <div class="absolute -top-3.5 left-6 bg-brandOrange text-white text-xs font-black uppercase px-3 py-1 rounded-md tracking-wider shadow-md">
-                            MÁS VENDIDO
+                        <div class="inline-block bg-brandTerracotta text-white text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-md tracking-wider mb-3">
+                            TRADICIONAL
                         </div>
-                        <h3 class="text-2xl font-bold text-white mt-2 mb-3">El Clásico</h3>
-                        <p class="text-zinc-400 text-sm leading-relaxed mb-6">
-                            Salchicha envuelta en tocino, jitomate, cebolla asada, mayonesa, mostaza y catsup.
+                        <h3 class="font-brand-title text-xl font-extrabold text-white mb-2">El Clásico</h3>
+                        <p class="text-gray-400 text-xs leading-relaxed mb-6 text-muted-brand">
+                            Salchicha prémium envuelta en tocino crujiente, jitomate picado, cebolla asada, mayonesa casera y aderezos.
                         </p>
                     </div>
-                    <div class="flex items-center justify-between pt-4 border-t border-zinc-800/60">
-                        <span class="text-xl sm:text-2xl font-black text-brandYellow">$35 MXN</span>
-                        <div class="flex items-center bg-zinc-800 rounded-lg p-1 border border-zinc-700">
-                            <button onclick="updateQty('clasico', -1)" class="w-8 h-8 rounded-md bg-zinc-700 hover:bg-zinc-600 text-white font-bold transition flex items-center justify-center text-sm" aria-label="Restar 1">-</button>
-                            <span id="qty-clasico" class="w-10 text-center font-bold text-white text-base">0</span>
-                            <button onclick="updateQty('clasico', 1)" class="w-8 h-8 rounded-md bg-zinc-700 hover:bg-zinc-600 text-white font-bold transition flex items-center justify-center text-sm" aria-label="Sumar 1">+</button>
+                    <div class="flex items-center justify-between pt-4 border-t border-white/10">
+                        <span class="font-brand-title text-xl font-extrabold text-brandMustard">$35 MXN</span>
+                        <div class="flex items-center bg-subtle-box bg-white/5 rounded-lg p-1 border border-white/10">
+                            <button onclick="updateQty('clasico', -1)" class="w-7 h-7 rounded bg-white/10 hover:bg-white/20 text-white font-bold transition flex items-center justify-center text-xs" aria-label="Restar">-</button>
+                            <span id="qty-clasico" class="w-8 text-center font-bold text-white text-sm">0</span>
+                            <button onclick="updateQty('clasico', 1)" class="w-7 h-7 rounded bg-white/10 hover:bg-white/20 text-white font-bold transition flex items-center justify-center text-xs" aria-label="Sumar">+</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Item 2: Hot Dog Monstruo (Gold Highlight) -->
-                <div class="reveal card-special-glow relative bg-brandCard rounded-3xl p-6 flex flex-col justify-between">
+                <!-- Item 2: Hot Dog Monstruo (Specialty Highlight) -->
+                <div class="reveal special-glow-card relative bg-brandCardDark rounded-2xl p-6 flex flex-col justify-between">
                     <div>
-                        <div class="absolute -top-3.5 left-6 bg-brandYellow text-black text-xs font-black uppercase px-3 py-1 rounded-md tracking-wider shadow-md">
+                        <div class="inline-block bg-brandMustard text-brandCharcoal text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-md tracking-wider mb-3">
                             ESPECIALIDAD
                         </div>
-                        <h3 class="text-2xl font-bold text-white mt-2 mb-3">Hot Dog Monstruo</h3>
-                        <p class="text-zinc-400 text-sm leading-relaxed mb-6">
-                            Doble salchicha, triple tocino, queso derretido, champiñones y papas picadas.
+                        <h3 class="font-brand-title text-xl font-extrabold text-white mb-2">Hot Dog Monstruo</h3>
+                        <p class="text-gray-400 text-xs leading-relaxed mb-6 text-muted-brand">
+                            Doble salchicha artesanal, triple tocino, gratinado de queso manchego, champiñones salteados y papas crujientes.
                         </p>
                     </div>
-                    <div class="flex items-center justify-between pt-4 border-t border-zinc-800/60">
-                        <span class="text-xl sm:text-2xl font-black text-brandYellow">$65 MXN</span>
-                        <div class="flex items-center bg-zinc-800 rounded-lg p-1 border border-zinc-700">
-                            <button onclick="updateQty('monstruo', -1)" class="w-8 h-8 rounded-md bg-zinc-700 hover:bg-zinc-600 text-white font-bold transition flex items-center justify-center text-sm" aria-label="Restar 1">-</button>
-                            <span id="qty-monstruo" class="w-10 text-center font-bold text-white text-base">0</span>
-                            <button onclick="updateQty('monstruo', 1)" class="w-8 h-8 rounded-md bg-zinc-700 hover:bg-zinc-600 text-white font-bold transition flex items-center justify-center text-sm" aria-label="Sumar 1">+</button>
+                    <div class="flex items-center justify-between pt-4 border-t border-white/10">
+                        <span class="font-brand-title text-xl font-extrabold text-brandMustard">$65 MXN</span>
+                        <div class="flex items-center bg-subtle-box bg-white/5 rounded-lg p-1 border border-white/10">
+                            <button onclick="updateQty('monstruo', -1)" class="w-7 h-7 rounded bg-white/10 hover:bg-white/20 text-white font-bold transition flex items-center justify-center text-xs" aria-label="Restar">-</button>
+                            <span id="qty-monstruo" class="w-8 text-center font-bold text-white text-sm">0</span>
+                            <button onclick="updateQty('monstruo', 1)" class="w-7 h-7 rounded bg-white/10 hover:bg-white/20 text-white font-bold transition flex items-center justify-center text-xs" aria-label="Sumar">+</button>
                         </div>
                     </div>
                 </div>
 
                 <!-- Item 3: El Habanero -->
-                <div class="reveal menu-card relative bg-brandCard rounded-3xl p-6 border border-zinc-800/80 flex flex-col justify-between">
+                <div class="reveal brand-card relative bg-brandCardDark rounded-2xl p-6 border border-white/10 flex flex-col justify-between">
                     <div>
-                        <h3 class="text-2xl font-bold text-white mb-3">El Habanero</h3>
-                        <p class="text-zinc-400 text-sm leading-relaxed mb-6">
-                            Salchicha de pavo, queso manchego, tocino crujiente y aderezo especial habanero.
+                        <div class="inline-block bg-brandTerracotta text-white text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-md tracking-wider mb-3">
+                            PICANTE GOURMET
+                        </div>
+                        <h3 class="font-brand-title text-xl font-extrabold text-white mb-2">El Habanero</h3>
+                        <p class="text-gray-400 text-xs leading-relaxed mb-6 text-muted-brand">
+                            Salchicha de pavo especiada, fundido de queso manchego, tocino crujiente y aderezo especial de habanero ahumado.
                         </p>
                     </div>
-                    <div class="flex items-center justify-between pt-4 border-t border-zinc-800/60">
-                        <span class="text-xl sm:text-2xl font-black text-brandYellow">$45 MXN</span>
-                        <div class="flex items-center bg-zinc-800 rounded-lg p-1 border border-zinc-700">
-                            <button onclick="updateQty('habanero', -1)" class="w-8 h-8 rounded-md bg-zinc-700 hover:bg-zinc-600 text-white font-bold transition flex items-center justify-center text-sm" aria-label="Restar 1">-</button>
-                            <span id="qty-habanero" class="w-10 text-center font-bold text-white text-base">0</span>
-                            <button onclick="updateQty('habanero', 1)" class="w-8 h-8 rounded-md bg-zinc-700 hover:bg-zinc-600 text-white font-bold transition flex items-center justify-center text-sm" aria-label="Sumar 1">+</button>
+                    <div class="flex items-center justify-between pt-4 border-t border-white/10">
+                        <span class="font-brand-title text-xl font-extrabold text-brandMustard">$45 MXN</span>
+                        <div class="flex items-center bg-subtle-box bg-white/5 rounded-lg p-1 border border-white/10">
+                            <button onclick="updateQty('habanero', -1)" class="w-7 h-7 rounded bg-white/10 hover:bg-white/20 text-white font-bold transition flex items-center justify-center text-xs" aria-label="Restar">-</button>
+                            <span id="qty-habanero" class="w-8 text-center font-bold text-white text-sm">0</span>
+                            <button onclick="updateQty('habanero', 1)" class="w-7 h-7 rounded bg-white/10 hover:bg-white/20 text-white font-bold transition flex items-center justify-center text-xs" aria-label="Sumar">+</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Item 4: Refresco Bien Frío -->
-                <div class="reveal menu-card relative bg-brandCard rounded-3xl p-6 border border-zinc-800/80 flex flex-col justify-between">
+                <!-- Item 4: Refresco Frío -->
+                <div class="reveal brand-card relative bg-brandCardDark rounded-2xl p-6 border border-white/10 flex flex-col justify-between">
                     <div>
-                        <h3 class="text-2xl font-bold text-white mb-3">Refresco Bien Frío</h3>
-                        <p class="text-zinc-400 text-sm leading-relaxed mb-6">
-                            Lata de 355ml a elegir (Coca-Cola, Fanta, Sprite, Mundet) al entregar tu pedido.
+                        <div class="inline-block bg-gray-700 text-gray-200 text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-md tracking-wider mb-3">
+                            BEBIDA
+                        </div>
+                        <h3 class="font-brand-title text-xl font-extrabold text-white mb-2">Refresco Bien Frío</h3>
+                        <p class="text-gray-400 text-xs leading-relaxed mb-6 text-muted-brand">
+                            Lata de 355ml súper helada a elegir (Coca-Cola, Fanta, Sprite, Mundet) al momento de recibir tu pedido.
                         </p>
                     </div>
-                    <div class="flex items-center justify-between pt-4 border-t border-zinc-800/60">
-                        <span class="text-xl sm:text-2xl font-black text-brandYellow">$25 MXN</span>
-                        <div class="flex items-center bg-zinc-800 rounded-lg p-1 border border-zinc-700">
-                            <button onclick="updateQty('refresco', -1)" class="w-8 h-8 rounded-md bg-zinc-700 hover:bg-zinc-600 text-white font-bold transition flex items-center justify-center text-sm" aria-label="Restar 1">-</button>
-                            <span id="qty-refresco" class="w-10 text-center font-bold text-white text-base">0</span>
-                            <button onclick="updateQty('refresco', 1)" class="w-8 h-8 rounded-md bg-zinc-700 hover:bg-zinc-600 text-white font-bold transition flex items-center justify-center text-sm" aria-label="Sumar 1">+</button>
+                    <div class="flex items-center justify-between pt-4 border-t border-white/10">
+                        <span class="font-brand-title text-xl font-extrabold text-brandMustard">$25 MXN</span>
+                        <div class="flex items-center bg-subtle-box bg-white/5 rounded-lg p-1 border border-white/10">
+                            <button onclick="updateQty('refresco', -1)" class="w-7 h-7 rounded bg-white/10 hover:bg-white/20 text-white font-bold transition flex items-center justify-center text-xs" aria-label="Restar">-</button>
+                            <span id="qty-refresco" class="w-8 text-center font-bold text-white text-sm">0</span>
+                            <button onclick="updateQty('refresco', 1)" class="w-7 h-7 rounded bg-white/10 hover:bg-white/20 text-white font-bold transition flex items-center justify-center text-xs" aria-label="Sumar">+</button>
                         </div>
                     </div>
                 </div>
 
+            </div>
+        </section>
+
+        <!-- Customer Reviews -->
+        <section id="resenas" class="reviews-section scroll-mt-40">
+            <div class="reviews-heading reveal">
+                <span class="reviews-eyebrow">Opiniones de clientes</span>
+                <h2 class="font-brand-title">Tu opinión cuenta</h2>
+                <p class="text-muted-brand">
+                    Cuéntanos cómo fue tu experiencia. Las reseñas se publican después de ser aprobadas.
+                </p>
+            </div>
+
+            <div class="reviews-layout">
+                <div class="reviews-display">
+                    <div id="reviewsStatus" class="reviews-status text-muted-brand" role="status" aria-live="polite">
+                        Cargando reseñas...
+                    </div>
+                    <div id="reviewsList" class="reviews-list"></div>
+                </div>
+
+                <form id="reviewForm" class="review-form">
+                    <h3 class="font-brand-title">Déjanos tu reseña</h3>
+                    <p class="review-form-description text-muted-brand">Tu comentario puede tener hasta 25 palabras.</p>
+
+                    <label for="reviewName">Nombre <span>(opcional)</span></label>
+                    <input id="reviewName" name="name" type="text" maxlength="40" autocomplete="name" placeholder="¿Cómo te llamas?">
+
+                    <fieldset class="review-rating">
+                        <legend>Calificación</legend>
+                        <div id="reviewRating" role="group" aria-label="Elige una calificación de 1 a 5 estrellas">
+                            <button type="button" class="review-star" data-rating="1" aria-label="1 estrella" aria-pressed="false">★</button>
+                            <button type="button" class="review-star" data-rating="2" aria-label="2 estrellas" aria-pressed="false">★</button>
+                            <button type="button" class="review-star" data-rating="3" aria-label="3 estrellas" aria-pressed="false">★</button>
+                            <button type="button" class="review-star" data-rating="4" aria-label="4 estrellas" aria-pressed="false">★</button>
+                            <button type="button" class="review-star" data-rating="5" aria-label="5 estrellas" aria-pressed="false">★</button>
+                        </div>
+                    </fieldset>
+
+                    <label for="reviewText">Tu reseña</label>
+                    <textarea id="reviewText" name="review" rows="4" maxlength="300" required placeholder="Comparte tu experiencia (máximo 25 palabras)"></textarea>
+                    <div class="review-word-row">
+                        <span>Máximo 25 palabras</span>
+                        <span id="reviewWordCount" aria-live="polite">0/25 palabras</span>
+                    </div>
+
+                    <p id="reviewFormStatus" class="review-form-status hidden" role="status" aria-live="polite"></p>
+                    <button id="submitReviewBtn" type="submit" class="review-submit btn-mustard">
+                        Enviar reseña
+                    </button>
+                </form>
             </div>
         </section>
 
         <!-- Events Section -->
-        <section id="eventos" class="py-20 bg-zinc-900/40 border-y border-zinc-800/60 scroll-mt-24">
-            <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-                <div class="reveal">
-                    <h2 class="text-3xl sm:text-5xl font-black text-white mb-6">
-                        ¿Tienes una fiesta o reunión?
-                    </h2>
-                    <p class="text-zinc-300 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto mb-10">
-                        Llevamos nuestro carrito directamente a tu evento. Nos encargamos de todo para que tú solo te dediques a disfrutar con tus invitados.
-                    </p>
-                </div>
+        <section id="eventos" class="py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto text-center scroll-mt-24">
+            <div class="reveal bg-brandTerracotta/10 border border-brandTerracotta/30 rounded-3xl p-8 sm:p-12">
+                <span class="text-xs font-bold uppercase tracking-widest text-brandTerracotta">Eventos Especiales</span>
+                <h2 class="font-brand-title text-3xl sm:text-5xl font-extrabold text-white mt-2 mb-4">
+                    ¿Tienes una reunión o fiesta?
+                </h2>
+                <p class="text-gray-300 text-sm sm:text-base max-w-2xl mx-auto mb-8 text-muted-brand">
+                    Llevamos la experiencia artesanal de Hot Dogs La Familia directamente a tu evento. Servicio personalizado con todo incluido.
+                </p>
 
-                <!-- Event Bullet Points con Alto Contraste -->
-                <div class="reveal space-y-4 max-w-md mx-auto text-left mb-10">
-                    <div class="flex items-center gap-3 text-zinc-200 text-base sm:text-lg font-bold">
-                        <span class="text-xl">✨</span>
-                        <span class="event-bullet-text">Servicio 100% personalizado</span>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-2xl mx-auto mb-8 text-left">
+                    <div class="flex items-center gap-3 text-sm font-semibold text-gray-200 text-muted-brand">
+                        <span class="text-brandMustard text-lg">✓</span>
+                        <span>Servicio 100% gourmet</span>
                     </div>
-                    <div class="flex items-center gap-3 text-zinc-200 text-base sm:text-lg font-bold">
-                        <span class="text-xl">🔥</span>
-                        <span class="event-bullet-text">Ingredientes frescos y calientitos</span>
+                    <div class="flex items-center gap-3 text-sm font-semibold text-gray-200 text-muted-brand">
+                        <span class="text-brandMustard text-lg">✓</span>
+                        <span>Ingredientes calientes y frescos</span>
                     </div>
-                    <div class="flex items-center gap-3 text-zinc-200 text-base sm:text-lg font-bold">
-                        <span class="text-xl">🎈</span>
-                        <span class="event-bullet-text">Ideal para cumpleaños, bodas y reuniones</span>
+                    <div class="flex items-center gap-3 text-sm font-semibold text-gray-200 text-muted-brand">
+                        <span class="text-brandMustard text-lg">✓</span>
+                        <span>Ideal para cualquier ocasión</span>
                     </div>
                 </div>
 
-                <!-- Reserve Button -->
-                <div class="reveal">
-                    <button onclick="openWhatsAppEvent()" class="btn-orange-glow px-9 py-4 rounded-full font-black text-white text-lg transition duration-300 inline-block">
-                        Reservar Fecha
-                    </button>
-                </div>
+                <button onclick="openWhatsAppEvent()" class="btn-terracotta px-8 py-3.5 rounded-xl font-extrabold text-base tracking-wide inline-block">
+                    Cotizar Evento por WhatsApp
+                </button>
             </div>
         </section>
 
-        <!-- Location Section -->
-        <section id="ubicacion" class="py-20 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto text-center scroll-mt-24">
-            <div class="reveal mb-8">
-                <h2 class="text-3xl sm:text-5xl font-black text-white mb-4">
-                    ¿Dónde nos encontramos?
-                </h2>
-                <p class="text-zinc-300 text-lg sm:text-xl font-medium mt-2">
-                    Calle Noche Buena #248 Cantoral Pesqueria
-                </p>
-            </div>
+        <!-- Location & Social Media Section -->
+        <section id="ubicacion" class="py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto scroll-mt-24">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <!-- Location Box -->
+                <div class="reveal hours-box bg-brandCardDark/80 border border-white/10 rounded-3xl p-8">
+                    <div class="w-10 h-10 rounded-full bg-brandMustard/10 text-brandMustard flex items-center justify-center text-xl mb-4">
+                        📍
+                    </div>
+                    <h3 class="font-brand-title text-2xl font-extrabold text-white mb-2">Visítanos en Pesquería</h3>
+                    <p class="text-gray-300 font-medium text-sm mb-6 text-muted-brand">
+                        Calle Noche Buena #248, Cantoral, Pesquería, N.L.
+                    </p>
+                    
+                    <div class="border-t border-white/10 pt-4">
+                        <h4 class="font-bold text-xs uppercase tracking-wider text-brandMustard mb-1">Horario de Atención</h4>
+                        <p class="text-gray-300 text-sm font-semibold text-muted-brand">
+                            Jueves a Domingo: 6:00 PM – 11:30 PM
+                        </p>
+                    </div>
+                </div>
 
-            <!-- Operating Hours Highlight Box -->
-            <div class="reveal hours-box max-w-xl mx-auto bg-brandCard/90 border-2 border-dashed border-yellow-500/80 rounded-2xl p-6 sm:p-8">
-                <h3 class="text-lg sm:text-xl font-bold text-white mb-2">
-                    Horarios de atención:
-                </h3>
-                <p class="text-zinc-300 text-base sm:text-lg font-medium">
-                    Jueves a Domingo: 6:00 PM – 11:30 PM
-                </p>
+                <!-- Digital Presence & Social Media -->
+                <div class="reveal brand-card bg-brandCardDark/80 border border-white/10 rounded-3xl p-8">
+                    <div class="w-10 h-10 rounded-full bg-brandTerracotta/10 text-brandTerracotta flex items-center justify-center text-xl mb-4">
+                        📱
+                    </div>
+                    <h3 class="font-brand-title text-2xl font-extrabold text-white mb-2">Comunidad Digital</h3>
+                    <p class="text-gray-300 font-medium text-sm mb-4 text-muted-brand">
+                        Síguenos en nuestras redes sociales y comparte tu experiencia con el hashtag oficial.
+                    </p>
+
+                    <div class="space-y-2">
+                        <div class="flex items-center gap-2 text-brandMustard font-bold text-base">
+                            <i class="fa-brands fa-instagram"></i>
+                            <span>@hotdogslafamilia</span>
+                        </div>
+                        <div class="inline-block bg-white/5 border border-white/10 px-3 py-1 rounded-lg text-xs font-mono text-gray-300">
+                            #HotDogsLaFamilia
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
 
     <!-- Footer Section -->
-    <footer class="bg-black border-t border-zinc-900 py-12 px-4 sm:px-6 text-center">
+    <footer class="bg-black border-t border-white/10 py-12 px-4 sm:px-6 text-center relative z-10">
         <div class="max-w-4xl mx-auto">
-            <p class="italic text-brandYellow text-base sm:text-lg font-bold max-w-2xl mx-auto mb-8 leading-relaxed opacity-100">
+            <div class="font-brand-title text-lg font-bold text-white mb-2">
+                LA FAMILIA
+            </div>
+            <p class="italic text-brandMustard text-sm font-bold max-w-xl mx-auto mb-6 leading-relaxed">
                 "Empezamos en la banqueta, pero los sueños no tienen límites. Gracias por ser parte de cada bocado y apoyar este proyecto hecho con el corazón."
             </p>
-            <p class="text-zinc-500 text-xs sm:text-sm font-medium">
-                © 2026 Hot Dogs La Familia. Todos los derechos reservados.
+            <p class="text-gray-500 text-xs font-medium">
+                © 2026 Hot Dogs La Familia. Sistema de marca y presencia digital.
             </p>
         </div>
     </footer>
 
     <!-- Floating WhatsApp Button -->
-    <a href="https://wa.me/?text=%C2%A1Hola!%20Quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20Hot%20Dogs%20La%20Familia" target="_blank" rel="noopener noreferrer" class="fixed bottom-6 right-6 z-40 bg-[#25D366] text-white w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center text-3xl sm:text-4xl whatsapp-glow" aria-label="Contacto WhatsApp">
+    <a href="https://wa.me/?text=%C2%A1Hola!%20Quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20Hot%20Dogs%20La%20Familia" target="_blank" rel="noopener noreferrer" class="fixed bottom-6 right-6 z-40 text-white w-14 h-14 rounded-full flex items-center justify-center text-3xl whatsapp-glow" aria-label="Contacto WhatsApp">
         <i class="fa-brands fa-whatsapp"></i>
     </a>
 
-    <!-- Slow Slide-In Cart Drawer / Backdrop Overlay -->
-    <div id="cartOverlay" onclick="toggleCartDrawer(false)" class="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 opacity-0 pointer-events-none transition-opacity duration-500 ease-in-out"></div>
-    <div id="cartDrawer" class="fixed top-0 right-0 h-full w-full max-w-md bg-brandCard z-50 cart-drawer-slide transform translate-x-full border-l border-zinc-800 p-6 flex flex-col justify-between shadow-2xl">
+    <!-- Cart Drawer & Backdrop Overlay -->
+    <div id="cartOverlay" onclick="toggleCartDrawer(false)" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 opacity-0 pointer-events-none transition-opacity duration-300 ease-in-out"></div>
+    <div id="cartDrawer" class="fixed top-0 right-0 h-full w-full max-w-md bg-brandCharcoal z-50 cart-drawer-slide transform translate-x-full border-l border-white/10 p-6 flex flex-col justify-between shadow-2xl">
         <div>
-            <!-- Cart Drawer Header -->
-            <div class="flex items-center justify-between border-b border-zinc-800 pb-4 mb-6">
-                <h3 class="text-2xl font-black text-white flex items-center gap-2">
-                    <i class="fa-solid fa-cart-shopping text-brandYellow"></i> Tu Pedido
+            <!-- Cart Header -->
+            <div class="flex items-center justify-between border-b border-white/10 pb-4 mb-6">
+                <h3 class="font-brand-title text-2xl font-extrabold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-cart-shopping text-brandMustard"></i> Tu Pedido
                 </h3>
-                <button onclick="toggleCartDrawer(false)" class="text-zinc-400 hover:text-white text-2xl transition-colors" aria-label="Cerrar Carrito">
+                <button onclick="toggleCartDrawer(false)" class="text-gray-400 hover:text-white text-2xl transition-colors" aria-label="Cerrar Carrito">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
 
-            <!-- Dynamic Cart Items Container -->
-            <div id="cartItemsList" class="space-y-4 max-h-[60vh] overflow-y-auto pr-1">
-                <!-- Cart items safely appended via JavaScript -->
+            <!-- Cart Items Container -->
+            <div id="cartItemsList" class="space-y-3 max-h-[60vh] overflow-y-auto pr-1">
+                <!-- Cart items safely generated via JS -->
             </div>
         </div>
 
-        <!-- Cart Drawer Summary Footer -->
-        <div class="border-t border-zinc-800 pt-6 mt-6">
-            <div class="flex justify-between items-center mb-6 text-xl font-black text-white">
+        <!-- Cart Summary Footer -->
+        <div class="border-t border-white/10 pt-6 mt-6">
+            <div class="flex justify-between items-center mb-6 text-xl font-extrabold text-white">
                 <span>Total:</span>
-                <span id="cartTotalAmount" class="text-brandYellow">$0 MXN</span>
+                <span id="cartTotalAmount" class="font-brand-title text-brandMustard">$0 MXN</span>
             </div>
-            <button onclick="sendOrderWhatsApp()" class="w-full btn-orange-glow py-4 rounded-full font-extrabold text-white text-lg flex items-center justify-center gap-2">
-                <i class="fa-brands fa-whatsapp text-2xl"></i> Enviar Pedido por WhatsApp
+            <button onclick="sendOrderWhatsApp()" class="w-full btn-mustard py-3.5 rounded-xl font-extrabold text-base flex items-center justify-center gap-2">
+                <i class="fa-brands fa-whatsapp text-xl"></i> Enviar Pedido por WhatsApp
+            </button>
+            <button id="cancelOrderBtn" onclick="cancelOrder()" class="cancel-order-btn" type="button" disabled>
+                Cancelar pedido
             </button>
         </div>
     </div>
 
-    <!-- Application Interactive Logic -->
+    <!-- Application Logic -->
+    <script src="supabase-config.js"></script>
     <script>
-        // Lógica de Conmutación de Modo Oscuro / Modo Claro
+        // Lógica de Conmutación Modo Oscuro / Claro
         function toggleTheme() {
             const html = document.documentElement;
             const icon = document.getElementById('themeIcon');
@@ -508,17 +951,16 @@
             if (html.classList.contains('dark')) {
                 html.classList.remove('dark');
                 localStorage.setItem('theme', 'light');
-                if (icon) icon.className = 'fa-solid fa-moon text-lg text-slate-700';
-                if (iconMobile) iconMobile.className = 'fa-solid fa-moon text-base text-slate-700';
+                if (icon) icon.className = 'fa-solid fa-moon text-base text-brandCharcoal';
+                if (iconMobile) iconMobile.className = 'fa-solid fa-moon text-sm text-brandCharcoal';
             } else {
                 html.classList.add('dark');
                 localStorage.setItem('theme', 'dark');
-                if (icon) icon.className = 'fa-solid fa-sun text-lg text-yellow-400';
-                if (iconMobile) iconMobile.className = 'fa-solid fa-sun text-base text-yellow-400';
+                if (icon) icon.className = 'fa-solid fa-sun text-base text-brandMustard';
+                if (iconMobile) iconMobile.className = 'fa-solid fa-sun text-sm text-brandMustard';
             }
         }
 
-        // Cargar Tema Preferido (Predeterminado: Modo Oscuro)
         function initTheme() {
             const savedTheme = localStorage.getItem('theme');
             const icon = document.getElementById('themeIcon');
@@ -526,30 +968,183 @@
 
             if (savedTheme === 'light') {
                 document.documentElement.classList.remove('dark');
-                if (icon) icon.className = 'fa-solid fa-moon text-lg text-slate-700';
-                if (iconMobile) iconMobile.className = 'fa-solid fa-moon text-base text-slate-700';
+                if (icon) icon.className = 'fa-solid fa-moon text-base text-brandCharcoal';
+                if (iconMobile) iconMobile.className = 'fa-solid fa-moon text-sm text-brandCharcoal';
             } else {
                 document.documentElement.classList.add('dark');
-                if (icon) icon.className = 'fa-solid fa-sun text-lg text-yellow-400';
-                if (iconMobile) iconMobile.className = 'fa-solid fa-sun text-base text-yellow-400';
+                if (icon) icon.className = 'fa-solid fa-sun text-base text-brandMustard';
+                if (iconMobile) iconMobile.className = 'fa-solid fa-sun text-sm text-brandMustard';
             }
         }
 
-        // Menu Items State Data
+        // Datos del Menú
         const menuData = {
             clasico: { name: 'El Clásico', price: 35, qty: 0 },
             monstruo: { name: 'Hot Dog Monstruo', price: 65, qty: 0 },
             habanero: { name: 'El Habanero', price: 45, qty: 0 },
             refresco: { name: 'Refresco Bien Frío', price: 25, qty: 0 }
         };
+        let cartHideTimeout = null;
+        let selectedReviewRating = 0;
 
+        function getSupabaseConfig() {
+            const config = window.SUPABASE_CONFIG;
+            if (!config || !config.url || !config.anonKey) return null;
+
+            try {
+                const url = new URL(config.url);
+                if (url.protocol !== 'https:') return null;
+                return { url: url.origin, anonKey: config.anonKey };
+            } catch {
+                return null;
+            }
+        }
+
+        function setReviewStatus(message, isError = false) {
+            const status = document.getElementById('reviewFormStatus');
+            status.textContent = message;
+            status.className = `review-form-status${isError ? ' is-error' : ''}`;
+        }
+
+        function getWordCount(text) {
+            const trimmed = text.trim();
+            return trimmed ? trimmed.split(/\s+/u).length : 0;
+        }
+
+        function updateReviewWordCount() {
+            const text = document.getElementById('reviewText').value;
+            document.getElementById('reviewWordCount').textContent = `${getWordCount(text)}/25 palabras`;
+        }
+
+        function selectReviewRating(rating) {
+            selectedReviewRating = rating;
+            document.querySelectorAll('.review-star').forEach(button => {
+                const isSelected = Number(button.dataset.rating) <= rating;
+                button.setAttribute('aria-pressed', String(Number(button.dataset.rating) === rating));
+                button.classList.toggle('is-selected', isSelected);
+            });
+        }
+
+        function renderReview(review) {
+            const card = document.createElement('article');
+            card.className = 'review-card';
+
+            const rating = document.createElement('p');
+            rating.className = 'review-stars';
+            rating.textContent = `${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}`;
+            rating.setAttribute('aria-label', `${review.rating} de 5 estrellas`);
+
+            const text = document.createElement('p');
+            text.className = 'review-copy';
+            text.textContent = review.review_text;
+
+            const author = document.createElement('p');
+            author.className = 'review-author';
+            author.textContent = review.display_name || 'Cliente';
+
+            card.append(rating, text, author);
+            return card;
+        }
+
+        async function loadReviews(config) {
+            const status = document.getElementById('reviewsStatus');
+            const list = document.getElementById('reviewsList');
+
+            try {
+                const response = await fetch(
+                    `${config.url}/rest/v1/reviews?select=display_name,review_text,rating,created_at&status=eq.approved&order=created_at.desc&limit=6`,
+                    {
+                        headers: {
+                            apikey: config.anonKey,
+                            Authorization: `Bearer ${config.anonKey}`
+                        },
+                        cache: 'no-store'
+                    }
+                );
+                if (!response.ok) throw new Error(`No se pudieron cargar las reseñas (${response.status}).`);
+
+                const reviews = await response.json();
+                list.replaceChildren(...reviews.map(renderReview));
+                status.textContent = reviews.length ? '' : 'Aún no hay reseñas publicadas. ¡Puedes ser la primera persona en compartir su opinión!';
+            } catch (error) {
+                console.error('Error al cargar reseñas:', error);
+                status.textContent = 'No pudimos cargar las reseñas. Inténtalo de nuevo más tarde.';
+            }
+        }
+
+        function initializeReviews() {
+            const config = getSupabaseConfig();
+            const form = document.getElementById('reviewForm');
+            const textInput = document.getElementById('reviewText');
+            const submitButton = document.getElementById('submitReviewBtn');
+            const reviewsStatus = document.getElementById('reviewsStatus');
+
+            document.querySelectorAll('.review-star').forEach(button => {
+                button.addEventListener('click', () => selectReviewRating(Number(button.dataset.rating)));
+            });
+            textInput.addEventListener('input', updateReviewWordCount);
+
+            if (!config) {
+                reviewsStatus.textContent = 'Las reseñas estarán disponibles próximamente.';
+                setReviewStatus('El servicio de reseñas aún no está configurado.', true);
+                submitButton.disabled = true;
+                return;
+            }
+
+            loadReviews(config);
+            form.addEventListener('submit', async event => {
+                event.preventDefault();
+                const reviewText = textInput.value.trim();
+                const wordCount = getWordCount(reviewText);
+                if (selectedReviewRating < 1 || selectedReviewRating > 5) {
+                    setReviewStatus('Selecciona una calificación de 1 a 5 estrellas.', true);
+                    return;
+                }
+                if (wordCount < 1 || wordCount > 25) {
+                    setReviewStatus('La reseña debe tener entre 1 y 25 palabras.', true);
+                    return;
+                }
+
+                submitButton.disabled = true;
+                setReviewStatus('Enviando reseña...');
+                try {
+                    const response = await fetch(`${config.url}/rest/v1/reviews`, {
+                        method: 'POST',
+                        headers: {
+                            apikey: config.anonKey,
+                            Authorization: `Bearer ${config.anonKey}`,
+                            'Content-Type': 'application/json',
+                            Prefer: 'return=minimal'
+                        },
+                        body: JSON.stringify({
+                            display_name: document.getElementById('reviewName').value.trim() || null,
+                            review_text: reviewText,
+                            rating: selectedReviewRating
+                        })
+                    });
+                    if (!response.ok) throw new Error(`No se pudo enviar la reseña (${response.status}).`);
+
+                    form.reset();
+                    selectReviewRating(0);
+                    updateReviewWordCount();
+                    setReviewStatus('¡Gracias! Tu reseña quedó pendiente de aprobación.');
+                } catch (error) {
+                    console.error('Error al enviar reseña:', error);
+                    setReviewStatus('No pudimos enviar tu reseña. Inténtalo de nuevo más tarde.', true);
+                } finally {
+                    submitButton.disabled = false;
+                }
+            });
+        }
+
+        // Estado en vivo del Local
         function calculateStoreStatus() {
             const now = new Date();
-            const day = now.getDay(); 
+            const day = now.getDay(); // 0 = Domingo, 4 = Jueves, 5 = Viernes, 6 = Sábado
             const currentMinutes = (now.getHours() * 60) + now.getMinutes();
 
-            const openMinutes = 18 * 60;        
-            const closeMinutes = (23 * 60) + 30; 
+            const openMinutes = 18 * 60;          // 6:00 PM
+            const closeMinutes = (23 * 60) + 30;   // 11:30 PM
 
             const isOpenDay = (day === 4 || day === 5 || day === 6 || day === 0);
             const isOpenTime = (currentMinutes >= openMinutes && currentMinutes <= closeMinutes);
@@ -557,26 +1152,29 @@
             const banner = document.getElementById('statusBanner');
 
             if (isOpenDay && isOpenTime) {
-                banner.className = "w-full text-center py-2.5 px-4 font-bold text-xs sm:text-sm tracking-wide bg-emerald-950 text-emerald-300 border-b border-emerald-700/80 flex items-center justify-center gap-2 relative overflow-hidden";
+                banner.className = "relative z-20 w-full text-center py-2.5 px-4 font-bold text-xs sm:text-sm tracking-wide bg-emerald-950 text-emerald-300 border-b border-emerald-700 flex items-center justify-center gap-2";
                 
                 banner.textContent = '';
                 const dotSpan = document.createElement('span');
-                dotSpan.className = 'w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping';
+                dotSpan.className = 'w-2 h-2 rounded-full bg-emerald-400 animate-ping';
                 
                 const textSpan = document.createElement('span');
-                textSpan.className = 'text-scale-pulse';
-                textSpan.textContent = ' 🟢 ¡Estamos Abiertos! Haz tu pedido ahora';
+                textSpan.textContent = '¡YA HEMOS ABIERTO! HAZ TU PEDIDO PARA ENTREGA O RECOLECCIÓN';
 
                 banner.appendChild(dotSpan);
                 banner.appendChild(textSpan);
             } else {
-                banner.className = "sticky top-0 z-50 w-full text-center py-2.5 px-4 font-bold text-xs sm:text-sm tracking-wide bg-red-950 text-red-300 border-b border-red-800/80 flex items-center justify-center gap-2 shadow-lg relative overflow-hidden";
+                banner.className = "relative z-20 w-full text-center py-2.5 px-4 font-bold text-xs sm:text-sm tracking-wide bg-brandTerracotta text-white border-b border-brandTerracotta flex items-center justify-center gap-2";
                 
                 banner.textContent = '';
+                const dotSpan = document.createElement('span');
+                dotSpan.className = 'w-2 h-2 rounded-full bg-red-400 animate-ping';
+
                 const textSpan = document.createElement('span');
-                textSpan.className = 'text-scale-pulse';
-                textSpan.textContent = '🔴 Ahora estamos Cerrados. Nuestro horario es de Jueves a Domingo de 6:00 PM a 11:30 PM';
+                textSpan.className = 'status-message-pulse';
+                textSpan.textContent = '¡HEMOS CERRADO! CONSULTA NUESTRO HORARIO MÁS ABAJO.';
                 
+                banner.appendChild(dotSpan);
                 banner.appendChild(textSpan);
             }
         }
@@ -584,64 +1182,55 @@
         document.addEventListener('DOMContentLoaded', () => {
             initTheme();
             calculateStoreStatus();
+            initializeReviews();
             setInterval(calculateStoreStatus, 60000);
 
-            let lastScrollY = window.scrollY;
-
+            // Scroll Reveal
             function checkRevealOnScroll() {
-                const currentScrollY = window.scrollY;
-                const isScrollingDown = currentScrollY > lastScrollY;
                 const windowHeight = window.innerHeight;
-
                 document.querySelectorAll('.reveal').forEach(el => {
                     const rect = el.getBoundingClientRect();
-                    if (isScrollingDown && rect.top <= windowHeight * 0.88 && rect.bottom >= 0) {
+                    if (rect.top <= windowHeight * 0.88) {
                         el.classList.add('active');
-                    } else if (isScrollingDown && rect.top > windowHeight) {
-                        el.classList.remove('active');
                     }
                 });
-
-                lastScrollY = currentScrollY;
             }
 
             checkRevealOnScroll();
             window.addEventListener('scroll', checkRevealOnScroll, { passive: true });
 
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    const targetId = this.getAttribute('href');
-                    if (targetId === '#') return;
-                    
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        e.preventDefault();
-                        targetElement.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                        closeMobileMenu();
-                    }
+            // Mobile Menu Toggle
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            if (mobileMenuBtn && mobileMenu) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    const isOpen = mobileMenu.classList.toggle('is-open');
+                    mobileMenuBtn.setAttribute('aria-expanded', String(isOpen));
+                    mobileMenu.setAttribute('aria-hidden', String(!isOpen));
+                    mobileMenu.inert = !isOpen;
                 });
-            });
-        });
-
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const mobileMenu = document.getElementById('mobileMenu');
-
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
+            }
         });
 
         function closeMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
             if (mobileMenu) {
-                mobileMenu.classList.add('hidden');
+                mobileMenu.classList.remove('is-open');
+                mobileMenu.setAttribute('aria-hidden', 'true');
+                mobileMenu.inert = true;
+            }
+            if (mobileMenuBtn) {
+                mobileMenuBtn.setAttribute('aria-expanded', 'false');
             }
         }
 
         function updateQty(itemId, change) {
             if (!menuData[itemId]) return;
 
+            const totalItemsBeforeUpdate = Object.values(menuData)
+                .reduce((total, item) => total + item.qty, 0);
+            const isRemovingLastCartItem = change < 0 && totalItemsBeforeUpdate === 1;
             menuData[itemId].qty = Math.max(0, menuData[itemId].qty + change);
             
             const qtyElem = document.getElementById(`qty-${itemId}`);
@@ -649,10 +1238,10 @@
                 qtyElem.textContent = menuData[itemId].qty;
             }
             
-            updateCartSummary();
+            updateCartSummary(isRemovingLastCartItem);
         }
 
-        function updateCartSummary() {
+        function updateCartSummary(animateRemoval = false) {
             let totalItems = 0;
             let totalPrice = 0;
 
@@ -667,16 +1256,16 @@
                     totalPrice += itemTotal;
 
                     const itemRow = document.createElement('div');
-                    itemRow.className = 'flex justify-between items-center bg-zinc-900/90 p-3.5 rounded-xl border border-zinc-800';
+                    itemRow.className = 'flex justify-between items-center bg-white/5 p-3 rounded-xl border border-white/10';
 
                     const infoDiv = document.createElement('div');
                     
                     const titleH4 = document.createElement('h4');
-                    titleH4.className = 'font-bold text-white text-base';
+                    titleH4.className = 'font-bold text-white text-sm';
                     titleH4.textContent = item.name;
 
                     const priceP = document.createElement('p');
-                    priceP.className = 'text-xs text-brandYellow font-semibold';
+                    priceP.className = 'text-xs text-brandMustard font-semibold';
                     priceP.textContent = `$${item.price} MXN c/u`;
 
                     infoDiv.appendChild(titleH4);
@@ -686,11 +1275,11 @@
                     qtyDiv.className = 'flex items-center gap-2';
 
                     const qtySpan = document.createElement('span');
-                    qtySpan.className = 'text-sm font-bold text-zinc-300';
+                    qtySpan.className = 'text-xs font-bold text-gray-300';
                     qtySpan.textContent = `x${item.qty}`;
 
                     const subtotalSpan = document.createElement('span');
-                    subtotalSpan.className = 'text-sm font-black text-white ml-2';
+                    subtotalSpan.className = 'text-xs font-black text-white ml-2';
                     subtotalSpan.textContent = `$${itemTotal} MXN`;
 
                     qtyDiv.appendChild(qtySpan);
@@ -704,24 +1293,48 @@
             });
 
             document.getElementById('cartCountBadge').textContent = totalItems;
-            document.getElementById('cartCountBadgeMobile').textContent = totalItems;
             document.getElementById('cartTotalAmount').textContent = `$${totalPrice} MXN`;
+            document.getElementById('cancelOrderBtn').disabled = totalItems === 0;
 
-            const cartNavBtn = document.getElementById('cartNavBtn');
-            const cartNavBtnMobile = document.getElementById('cartNavBtnMobile');
+            const cartFloatingBtn = document.getElementById('cartFloatingBtn');
 
             if (totalItems > 0) {
-                cartNavBtn.classList.remove('hidden');
-                cartNavBtnMobile.classList.remove('hidden');
+                clearTimeout(cartHideTimeout);
+                cartFloatingBtn.classList.remove('hidden');
             } else {
-                cartNavBtn.classList.add('hidden');
-                cartNavBtnMobile.classList.add('hidden');
+                if (animateRemoval) {
+                    cartFloatingBtn.classList.remove('hidden', 'cart-explode');
+                    void cartFloatingBtn.offsetWidth;
+                    cartFloatingBtn.classList.add('cart-explode');
+                    clearTimeout(cartHideTimeout);
+                    cartHideTimeout = setTimeout(() => {
+                        cartFloatingBtn.classList.remove('cart-explode');
+                        if (document.getElementById('cartCountBadge').textContent === '0') {
+                            cartFloatingBtn.classList.add('hidden');
+                        }
+                    }, 450);
+                } else {
+                    cartFloatingBtn.classList.add('hidden');
+                }
                 
                 const emptyMsg = document.createElement('p');
-                emptyMsg.className = 'text-zinc-500 text-center py-8 font-medium';
-                emptyMsg.textContent = 'Tu carrito está vacío.';
+                emptyMsg.className = 'text-gray-400 text-center py-8 text-sm font-medium';
+                emptyMsg.textContent = 'Tu pedido está vacío por el momento.';
                 cartItemsList.appendChild(emptyMsg);
             }
+        }
+
+        function cancelOrder() {
+            Object.entries(menuData).forEach(([itemId, item]) => {
+                item.qty = 0;
+                const qtyElem = document.getElementById(`qty-${itemId}`);
+                if (qtyElem) {
+                    qtyElem.textContent = '0';
+                }
+            });
+
+            updateCartSummary();
+            toggleCartDrawer(false);
         }
 
         function toggleCartDrawer(open) {
@@ -752,7 +1365,7 @@
 
             if (orderLines.length === 0) return;
 
-            const message = `¡Hola! Quisiera realizar el siguiente pedido en *Hot Dogs La Familia*:\n\n${orderLines.join('\n')}\n\n*Total:* $${total} MXN\n\n¿Me confirman el tiempo de entrega?`;
+            const message = `¡Hola! Quisiera realizar el siguiente pedido en *Hot Dogs La Familia*:\n\n${orderLines.join('\n')}\n\n*Total:* $${total} MXN\n\n¿Me confirman tiempo estimado de preparación?`;
             
             const encodedMessage = encodeURIComponent(message);
             window.open(`https://wa.me/?text=${encodedMessage}`, '_blank', 'noopener,noreferrer');
