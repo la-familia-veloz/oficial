@@ -756,57 +756,6 @@
             </div>
         </section>
 
-        <!-- Customer Reviews -->
-        <section id="resenas" class="reviews-section scroll-mt-40">
-            <div class="reviews-heading reveal">
-                <span class="reviews-eyebrow">Opiniones de clientes</span>
-                <h2 class="font-brand-title">Tu opinión cuenta</h2>
-                <p class="text-muted-brand">
-                    Cuéntanos cómo fue tu experiencia. Las reseñas se publican después de ser aprobadas.
-                </p>
-            </div>
-
-            <div class="reviews-layout">
-                <div class="reviews-display">
-                    <div id="reviewsStatus" class="reviews-status text-muted-brand" role="status" aria-live="polite">
-                        Cargando reseñas...
-                    </div>
-                    <div id="reviewsList" class="reviews-list"></div>
-                </div>
-
-                <form id="reviewForm" class="review-form">
-                    <h3 class="font-brand-title">Déjanos tu reseña</h3>
-                    <p class="review-form-description text-muted-brand">Tu comentario puede tener hasta 25 palabras.</p>
-
-                    <label for="reviewName">Nombre <span>(opcional)</span></label>
-                    <input id="reviewName" name="name" type="text" maxlength="40" autocomplete="name" placeholder="¿Cómo te llamas?">
-
-                    <fieldset class="review-rating">
-                        <legend>Calificación</legend>
-                        <div id="reviewRating" role="group" aria-label="Elige una calificación de 1 a 5 estrellas">
-                            <button type="button" class="review-star" data-rating="1" aria-label="1 estrella" aria-pressed="false">★</button>
-                            <button type="button" class="review-star" data-rating="2" aria-label="2 estrellas" aria-pressed="false">★</button>
-                            <button type="button" class="review-star" data-rating="3" aria-label="3 estrellas" aria-pressed="false">★</button>
-                            <button type="button" class="review-star" data-rating="4" aria-label="4 estrellas" aria-pressed="false">★</button>
-                            <button type="button" class="review-star" data-rating="5" aria-label="5 estrellas" aria-pressed="false">★</button>
-                        </div>
-                    </fieldset>
-
-                    <label for="reviewText">Tu reseña</label>
-                    <textarea id="reviewText" name="review" rows="4" maxlength="300" required placeholder="Comparte tu experiencia (máximo 25 palabras)"></textarea>
-                    <div class="review-word-row">
-                        <span>Máximo 25 palabras</span>
-                        <span id="reviewWordCount" aria-live="polite">0/25 palabras</span>
-                    </div>
-
-                    <p id="reviewFormStatus" class="review-form-status hidden" role="status" aria-live="polite"></p>
-                    <button id="submitReviewBtn" type="submit" class="review-submit btn-mustard">
-                        Enviar reseña
-                    </button>
-                </form>
-            </div>
-        </section>
-
         <!-- Events Section -->
         <section id="eventos" class="py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto text-center scroll-mt-24">
             <div class="reveal bg-brandTerracotta/10 border border-brandTerracotta/30 rounded-3xl p-8 sm:p-12">
@@ -882,15 +831,63 @@
                 </div>
             </div>
         </section>
+
+        <!-- Customer Reviews -->
+        <section id="resenas" class="reviews-section scroll-mt-40">
+            <div class="reviews-heading reveal">
+                <span class="reviews-eyebrow">Opiniones de clientes</span>
+                <h2 class="font-brand-title">Tu opinión cuenta</h2>
+                <p class="text-muted-brand">
+                    Cuéntanos cómo fue tu experiencia. Las reseñas se publican automáticamente.
+                </p>
+            </div>
+
+            <div class="reviews-layout">
+                <div class="reviews-display">
+                    <div id="reviewsStatus" class="reviews-status text-muted-brand" role="status" aria-live="polite">
+                        Cargando reseñas...
+                    </div>
+                    <div id="reviewsList" class="reviews-list"></div>
+                </div>
+
+                <form id="reviewForm" class="review-form">
+                    <h3 class="font-brand-title">Déjanos tu reseña</h3>
+                    <p class="review-form-description text-muted-brand">Tu comentario puede tener hasta 25 palabras.</p>
+
+                    <label for="reviewName">Nombre <span>(opcional)</span></label>
+                    <input id="reviewName" name="name" type="text" maxlength="40" autocomplete="name" placeholder="¿Cómo te llamas?">
+
+                    <fieldset class="review-rating">
+                        <legend>Calificación</legend>
+                        <div id="reviewRating" role="group" aria-label="Elige una calificación de 1 a 5 estrellas">
+                            <button type="button" class="review-star" data-rating="1" aria-label="1 estrella" aria-pressed="false">★</button>
+                            <button type="button" class="review-star" data-rating="2" aria-label="2 estrellas" aria-pressed="false">★</button>
+                            <button type="button" class="review-star" data-rating="3" aria-label="3 estrellas" aria-pressed="false">★</button>
+                            <button type="button" class="review-star" data-rating="4" aria-label="4 estrellas" aria-pressed="false">★</button>
+                            <button type="button" class="review-star" data-rating="5" aria-label="5 estrellas" aria-pressed="false">★</button>
+                        </div>
+                    </fieldset>
+
+                    <label for="reviewText">Tu reseña</label>
+                    <textarea id="reviewText" name="review" rows="4" maxlength="300" required placeholder="Comparte tu experiencia (máximo 25 palabras)"></textarea>
+                    <div class="review-word-row">
+                        <span>Máximo 25 palabras</span>
+                        <span id="reviewWordCount" aria-live="polite">0/25 palabras</span>
+                    </div>
+
+                    <p id="reviewFormStatus" class="review-form-status hidden" role="status" aria-live="polite"></p>
+                    <button id="submitReviewBtn" type="submit" class="review-submit btn-mustard">
+                        Enviar reseña
+                    </button>
+                </form>
+            </div>
+        </section>
     </main>
 
     <!-- Footer Section -->
-    <footer class="bg-black border-t border-white/10 py-12 px-4 sm:px-6 text-center relative z-10">
-        <div class="max-w-4xl mx-auto">
-            <div class="font-brand-title text-lg font-bold text-white mb-2">
-                LA FAMILIA
-            </div>
-            <p class="italic text-brandMustard text-sm font-bold max-w-xl mx-auto mb-6 leading-relaxed">
+    <footer class="bg-black border-t border-white/10 py-8 px-6 sm:px-8 text-center relative z-10">
+        <div class="max-w-xl mx-auto">
+            <p class="italic text-brandMustard text-sm font-bold max-w-xl mx-auto mb-3 leading-relaxed">
                 "Empezamos en la banqueta, pero los sueños no tienen límites. Gracias por ser parte de cada bocado y apoyar este proyecto hecho con el corazón."
             </p>
             <p class="text-gray-500 text-xs font-medium">
@@ -1016,13 +1013,19 @@
             document.getElementById('reviewWordCount').textContent = `${getWordCount(text)}/25 palabras`;
         }
 
+        function displayReviewRating(rating) {
+            document.querySelectorAll('.review-star').forEach(button => {
+                const isSelected = Number(button.dataset.rating) <= rating;
+                button.classList.toggle('is-selected', isSelected);
+            });
+        }
+
         function selectReviewRating(rating) {
             selectedReviewRating = rating;
             document.querySelectorAll('.review-star').forEach(button => {
-                const isSelected = Number(button.dataset.rating) <= rating;
                 button.setAttribute('aria-pressed', String(Number(button.dataset.rating) === rating));
-                button.classList.toggle('is-selected', isSelected);
             });
+            displayReviewRating(rating);
         }
 
         function renderReview(review) {
@@ -1078,9 +1081,21 @@
             const textInput = document.getElementById('reviewText');
             const submitButton = document.getElementById('submitReviewBtn');
             const reviewsStatus = document.getElementById('reviewsStatus');
+            const ratingGroup = document.getElementById('reviewRating');
 
             document.querySelectorAll('.review-star').forEach(button => {
                 button.addEventListener('click', () => selectReviewRating(Number(button.dataset.rating)));
+                button.addEventListener('mouseenter', () => displayReviewRating(Number(button.dataset.rating)));
+            });
+            ratingGroup.addEventListener('mouseleave', () => displayReviewRating(selectedReviewRating));
+            ratingGroup.addEventListener('focusin', event => {
+                const button = event.target.closest('.review-star');
+                if (button) displayReviewRating(Number(button.dataset.rating));
+            });
+            ratingGroup.addEventListener('focusout', event => {
+                if (!ratingGroup.contains(event.relatedTarget)) {
+                    displayReviewRating(selectedReviewRating);
+                }
             });
             textInput.addEventListener('input', updateReviewWordCount);
 
@@ -1119,7 +1134,8 @@
                         body: JSON.stringify({
                             display_name: document.getElementById('reviewName').value.trim() || null,
                             review_text: reviewText,
-                            rating: selectedReviewRating
+                            rating: selectedReviewRating,
+                            status: 'approved'
                         })
                     });
                     if (!response.ok) throw new Error(`No se pudo enviar la reseña (${response.status}).`);
@@ -1127,7 +1143,8 @@
                     form.reset();
                     selectReviewRating(0);
                     updateReviewWordCount();
-                    setReviewStatus('¡Gracias! Tu reseña quedó pendiente de aprobación.');
+                    setReviewStatus('¡Gracias! Tu reseña ha sido publicada.');
+                    loadReviews(config);
                 } catch (error) {
                     console.error('Error al enviar reseña:', error);
                     setReviewStatus('No pudimos enviar tu reseña. Inténtalo de nuevo más tarde.', true);
